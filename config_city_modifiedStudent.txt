@@ -1,0 +1,214 @@
+%0 ieee 802.11a/g
+{
+%1D array index:
+ArrIndi=0
+%Channel frequency (Hz):                  
+freq=5000000000
+%Channel bandwidth (Hz):
+%LACKING        
+band=20000000
+%Transmission rate for data (bits/s):
+dtxr=54000000
+%Transmission rate for control information (bits/s):
+ctxr=54000000
+%Transmission distance (meter):
+txds=0
+%Signal propagation speed (meters/s):
+sps=LIGHTSPEED
+%Transmission power (Walt):
+txpw=0.1
+%Ambient noise (Walt):
+%LACKING
+noise=0
+%Antenna system id: combinations of SISO, MIMO, directional, omni:
+antid=3
+%FEC scheme id:
+fecid=0
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%Preamble length for physical transmission in bits (default:8 bytes):
+%LACKING
+prlen=64
+%Number of sub-channels:
+nscha=1
+%Communication media type: radio, laser, acoustic, fiber:
+mtype=0                      
+%Communication mode: duplex, simplex:
+cmode=1
+%Default power model:
+powermod=1                        
+}
+%1 ieee 802.11b
+{
+%1D array index:
+ArrIndi=1
+%Channel frequency (Hz):                  
+freq=2400000000
+%Channel bandwidth (Hz):
+%LACKING                    
+band=20000000                
+%Transmission rate for data (bits/s):
+dtxr=11000000
+%Transmission rate for control information (bits/s):
+ctxr=11000000
+%Transmission distance (meter):
+txds=0
+%Signal propagation speed (meters/s):
+%LACKING
+sps=LIGHTSPEED
+%Transmission power (Walt):
+txpw=0.032
+%Ambient noise (Walt):
+%LACKING
+noise=0
+%Antenna system id: combinations of SISO, MIMO, directional, omni:
+antid=3
+%FEC scheme id:
+fecid=0
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%Preamble length for physical transmission in bits (default:8 bytes):
+%LACKING
+prlen=64
+%Number of sub-channels:
+nscha=1
+%Communication media type: radio, laser, acoustic, fiber:
+mtype=0
+%Communication mode: duplex, simplex:
+cmode=1
+%Default power model:
+powermod=1
+}
+%2 ieee 802.11n:
+{
+%1D array index:
+ArrIndi=2
+%Channel frequency (Hz):                  
+freq=2400000000
+%Channel bandwidth (Hz):                    
+band=20000000
+%Transmission rate for data (bits/s):
+%LACKING
+dtxr=100000000            
+%Transmission rate for control information (bits/s):
+%LACKING
+ctxr=100000000
+%Transmission distance (meter):
+txds=0
+%Signal propagation speed (meters/s):
+sps=LIGHTSPEED
+%Transmission power (Walt):
+txpw=0.1
+%Ambient noise (Walt):
+%LACKING
+noise=0
+%Antenna system id: combinations of SISO, MIMO, directional, omni:
+antid=0
+%FEC scheme id:
+fecid=0
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%Preamble length for physical transmission in bits (default:8 bytes):
+%LACKING
+prlen=64
+%Number of sub-channels:
+nscha=1              
+%Communication media type: radio, laser, acoustic, fiber:
+mtype=0                      
+%Communication mode: duplex, simplex:
+cmode=1
+%Default power model:
+powermod=1                        
+}
+%3 802.15.4(zigbee):
+{
+%1D array index:
+ArrIndi=3
+%Channel frequency (Hz):                  
+freq=2400000000
+%Channel bandwidth (Hz):                    
+band=915000000
+%Transmission rate for data (bits/s):
+dtxr=40000          
+%Transmission rate for control information (bits/s):
+ctxr=40000 
+%Transmission distance (meter):
+txds=0
+%Signal propagation speed (meters/s):
+sps=LIGHTSPEED
+%Transmission power (Walt):
+txpw=0.00135
+%Ambient noise (Walt):
+%LACKING
+noise=0
+%Antenna system id: combinations of SISO, MIMO, directional, omni:
+antid=0
+%FEC scheme id:
+fecid=0
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%Preamble length for physical transmission in bits (default:8 bytes):
+%LACKING
+prlen=64
+%Number of sub-channels:
+nscha=1              
+%Communication media type: radio, laser, acoustic, fiber:
+mtype=0                      
+%Communication mode: duplex, simplex:
+cmode=1
+%Default power model:
+powermod=1                        
+}
+%4 802.16:
+{
+%1D array index:
+ArrIndi=4
+%Channel frequency (Hz):
+%LACKING                  
+freq=10000000000
+%Channel bandwidth (Hz):
+%LACKING                    
+band=20000000
+%Transmission rate for data (bits/s):
+%LACKING
+dtxr=30000000        
+%Transmission rate for control information (bits/s):
+ctxr=30000000
+%Transmission distance (meter):
+txds=0
+%Signal propagation speed (meters/s):
+%LACKING
+sps=LIGHTSPEED
+%Transmission power (Walt):
+txpw=0.1
+%Ambient noise (Walt):
+%LACKING
+noise=0
+%Antenna system id: combinations of SISO, MIMO, directional, omni:
+antid=0
+%FEC scheme id:
+fecid=0
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%Preamble length for physical transmission in bits (default:8 bytes):
+%LACKING
+prlen=64
+%Number of sub-channels:
+nscha=1              
+%Communication media type: radio, laser, acoustic, fiber:
+mtype=0                      
+%Communication mode: duplex, simplex:
+cmode=1
+%Default power model:
+powermod=1                        
+}
