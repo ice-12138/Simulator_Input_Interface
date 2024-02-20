@@ -19,19 +19,19 @@
      <x>220</x>
      <y>0</y>
      <width>671</width>
-     <height>651</height>
+     <height>611</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout">
+   <layout class="QFormLayout" name="netword_card_formLayout">
     <item row="0" column="0">
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="network_card_label">
       <property name="text">
-       <string>网卡</string>
+       <string>network card</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="network_card_comboBox">
       <item>
        <property name="text">
         <string>ieee 802.11a/g</string>
@@ -60,14 +60,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="ArrIndi_label">
       <property name="text">
        <string>1D array index</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QComboBox" name="comboBox_2">
+     <widget class="QComboBox" name="ArrIndi_comboBox">
       <item>
        <property name="text">
         <string>0</string>
@@ -95,38 +95,17 @@
       </item>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Transmission rate for data</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Transmission rate for control information</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>Transmission distance</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="0">
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="freq_label">
       <property name="text">
        <string>Channel frequency</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="freq_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_3">
+       <widget class="QComboBox" name="freq_comboBox">
         <item>
          <property name="text">
           <string>Hz</string>
@@ -145,105 +124,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="freq_lineEdit"/>
       </item>
      </layout>
     </item>
     <item row="3" column="0">
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="band_label">
       <property name="text">
        <string>Channel bandwidth</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <widget class="QLabel" name="label_8">
-      <property name="text">
-       <string>Signal propagation speed</string>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="0">
-     <widget class="QLabel" name="label_9">
-      <property name="text">
-       <string>Transmission power</string>
-      </property>
-     </widget>
-    </item>
-    <item row="9" column="0">
-     <widget class="QLabel" name="label_10">
-      <property name="text">
-       <string>Ambient noise</string>
-      </property>
-     </widget>
-    </item>
-    <item row="10" column="0">
-     <widget class="QLabel" name="label_11">
-      <property name="text">
-       <string>Antenna system</string>
-      </property>
-     </widget>
-    </item>
-    <item row="11" column="0">
-     <widget class="QLabel" name="label_12">
-      <property name="text">
-       <string>FEC scheme</string>
-      </property>
-     </widget>
-    </item>
-    <item row="12" column="0">
-     <widget class="QLabel" name="label_13">
-      <property name="text">
-       <string>MAC protocol</string>
-      </property>
-     </widget>
-    </item>
-    <item row="13" column="0">
-     <widget class="QLabel" name="label_14">
-      <property name="text">
-       <string>LLC protocol</string>
-      </property>
-     </widget>
-    </item>
-    <item row="14" column="0">
-     <widget class="QLabel" name="label_15">
-      <property name="text">
-       <string>Preamble length for physical transmission</string>
-      </property>
-     </widget>
-    </item>
-    <item row="15" column="0">
-     <widget class="QLabel" name="label_16">
-      <property name="text">
-       <string>Number of sub-channels</string>
-      </property>
-     </widget>
-    </item>
-    <item row="16" column="0">
-     <widget class="QLabel" name="label_17">
-      <property name="text">
-       <string>Communication media type</string>
-      </property>
-     </widget>
-    </item>
-    <item row="17" column="0">
-     <widget class="QLabel" name="label_18">
-      <property name="text">
-       <string>Communication mode</string>
-      </property>
-     </widget>
-    </item>
-    <item row="18" column="0">
-     <widget class="QLabel" name="label_19">
-      <property name="text">
-       <string>Default power model</string>
-      </property>
-     </widget>
-    </item>
     <item row="3" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QHBoxLayout" name="band_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_4">
+       <widget class="QComboBox" name="band_comboBox">
         <item>
          <property name="text">
           <string>Hz</string>
@@ -262,14 +157,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="band_lineEdit"/>
       </item>
      </layout>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="dtxr_label">
+      <property name="text">
+       <string>Transmission rate for data</string>
+      </property>
+     </widget>
     </item>
     <item row="4" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="dtxr_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_5">
+       <widget class="QComboBox" name="dtxr_comboBox">
         <item>
          <property name="text">
           <string>bits/s</string>
@@ -288,14 +190,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="dtxr_lineEdit"/>
       </item>
      </layout>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="ctxr_label">
+      <property name="text">
+       <string>Transmission rate for control information</string>
+      </property>
+     </widget>
     </item>
     <item row="5" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QHBoxLayout" name="ctxr_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_6">
+       <widget class="QComboBox" name="ctxr_comboBox">
         <item>
          <property name="text">
           <string>bits/s</string>
@@ -314,14 +223,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QLineEdit" name="ctxr_lineEdit"/>
       </item>
      </layout>
     </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="txds_label">
+      <property name="text">
+       <string>Transmission distance</string>
+      </property>
+     </widget>
+    </item>
     <item row="6" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <layout class="QHBoxLayout" name="txds_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_7">
+       <widget class="QComboBox" name="txds_comboBox">
         <item>
          <property name="text">
           <string>m</string>
@@ -335,17 +251,28 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_5"/>
+       <widget class="QLineEdit" name="txds_lineEdit"/>
       </item>
      </layout>
     </item>
-    <item row="7" column="1">
-     <widget class="QLineEdit" name="lineEdit_6"/>
+    <item row="7" column="0">
+     <widget class="QLabel" name="sps_label">
+      <property name="text">
+       <string>Signal propagation speed</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="txpw_label">
+      <property name="text">
+       <string>Transmission power</string>
+      </property>
+     </widget>
     </item>
     <item row="8" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <layout class="QHBoxLayout" name="txpw_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_8">
+       <widget class="QComboBox" name="txpw_comboBox">
         <item>
          <property name="text">
           <string>Walt</string>
@@ -354,14 +281,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_7"/>
+       <widget class="QLineEdit" name="txpw_lineEdit"/>
       </item>
      </layout>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="noise_label">
+      <property name="text">
+       <string>Ambient noise</string>
+      </property>
+     </widget>
     </item>
     <item row="9" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <layout class="QHBoxLayout" name="noise_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_9">
+       <widget class="QComboBox" name="noise_comboBox">
         <item>
          <property name="text">
           <string>Walt</string>
@@ -370,14 +304,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_8"/>
+       <widget class="QLineEdit" name="noise_lineEdit"/>
       </item>
      </layout>
     </item>
+    <item row="10" column="0">
+     <widget class="QLabel" name="antid_label">
+      <property name="text">
+       <string>Antenna system</string>
+      </property>
+     </widget>
+    </item>
     <item row="10" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <layout class="QHBoxLayout" name="antid_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_10">
+       <widget class="QComboBox" name="antid_comboBox">
         <item>
          <property name="text">
           <string>SISO</string>
@@ -400,24 +341,61 @@
         </item>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="lineEdit_9"/>
-      </item>
      </layout>
     </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="fecid_label">
+      <property name="text">
+       <string>FEC scheme</string>
+      </property>
+     </widget>
+    </item>
     <item row="11" column="1">
-     <widget class="QLineEdit" name="lineEdit_10"/>
+     <widget class="QLineEdit" name="fecid_lineEdit"/>
+    </item>
+    <item row="12" column="0">
+     <widget class="QLabel" name="macid_label">
+      <property name="text">
+       <string>MAC protocol</string>
+      </property>
+     </widget>
     </item>
     <item row="12" column="1">
-     <widget class="QComboBox" name="comboBox_11"/>
+     <widget class="QComboBox" name="macid_comboBox">
+      <item>
+       <property name="text">
+        <string>MACNPCSMA</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="13" column="0">
+     <widget class="QLabel" name="llcid_label">
+      <property name="text">
+       <string>LLC protocol</string>
+      </property>
+     </widget>
     </item>
     <item row="13" column="1">
-     <widget class="QComboBox" name="comboBox_12"/>
+     <widget class="QComboBox" name="llcidcomboBox">
+      <item>
+       <property name="text">
+        <string>LLCNOP</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="14" column="0">
+     <widget class="QLabel" name="prlen_label">
+      <property name="text">
+       <string>Preamble length for physical transmission</string>
+      </property>
+     </widget>
     </item>
     <item row="14" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_10">
+     <layout class="QHBoxLayout" name="prlen_horizontalLayout">
       <item>
-       <widget class="QComboBox" name="comboBox_13">
+       <widget class="QComboBox" name="prlen_comboBox">
         <item>
          <property name="text">
           <string>bytes</string>
@@ -426,15 +404,29 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_11"/>
+       <widget class="QLineEdit" name="prlen_lineEdit"/>
       </item>
      </layout>
     </item>
+    <item row="15" column="0">
+     <widget class="QLabel" name="nscha_label">
+      <property name="text">
+       <string>Number of sub-channels</string>
+      </property>
+     </widget>
+    </item>
     <item row="15" column="1">
-     <widget class="QSpinBox" name="spinBox"/>
+     <widget class="QSpinBox" name="nscha_spinBox"/>
+    </item>
+    <item row="16" column="0">
+     <widget class="QLabel" name="mtype_label">
+      <property name="text">
+       <string>Communication media type</string>
+      </property>
+     </widget>
     </item>
     <item row="16" column="1">
-     <widget class="QComboBox" name="comboBox_14">
+     <widget class="QComboBox" name="mtype_comboBox">
       <item>
        <property name="text">
         <string>radio</string>
@@ -457,8 +449,15 @@
       </item>
      </widget>
     </item>
+    <item row="17" column="0">
+     <widget class="QLabel" name="cmode_label">
+      <property name="text">
+       <string>Communication mode</string>
+      </property>
+     </widget>
+    </item>
     <item row="17" column="1">
-     <widget class="QComboBox" name="comboBox_15">
+     <widget class="QComboBox" name="cmode_comboBox">
       <item>
        <property name="text">
         <string>duplex</string>
@@ -471,8 +470,57 @@
       </item>
      </widget>
     </item>
+    <item row="18" column="0">
+     <widget class="QLabel" name="powermod_label">
+      <property name="text">
+       <string>Default power model</string>
+      </property>
+     </widget>
+    </item>
     <item row="18" column="1">
-     <widget class="QLineEdit" name="lineEdit_12"/>
+     <widget class="QLineEdit" name="powermod_lineEdit"/>
+    </item>
+    <item row="7" column="1">
+     <widget class="QComboBox" name="sps_comboBox">
+      <item>
+       <property name="text">
+        <string>LIGHTSPEED</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>610</y>
+     <width>295</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="save_button">
+      <property name="text">
+       <string>save</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="open_button">
+      <property name="text">
+       <string>open</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="cancel_button">
+      <property name="text">
+       <string>cancel</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
