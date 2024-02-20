@@ -35,8 +35,7 @@ class MyApplication(QMainWindow):
                      "ieee 802.11n", "802.15.4(zigbee)"], False)
         
         basic.create("label", "1D array index", True, "ArrIndi")
-        
-        basic.create("combox", ["0", "1", "2", "3", "4"],  True, "ArrIndi")
+        basic.create("combox", ["0", "1", "2", "3", "4"],  True)
         
         basic.create("label", "Channel freauency", True, "freq")      
         child1 = basic.createChild("combox", ["Hz", "MHz", "GHz"])
