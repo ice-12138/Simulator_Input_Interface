@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from tools.basic import basic as Basic
 import sys
+import time
 
 
 class MyApplication(QMainWindow):
@@ -21,89 +22,100 @@ class MyApplication(QMainWindow):
         self.save_button.clicked.connect(self.save_to_file)
 
     def setupUi(self, Form):
-        Form.setObjectName("Form")
         Form.resize(894, 653)
         self.formLayoutWidget = QtWidgets.QWidget(Form)
         self.formLayoutWidget.setGeometry(QtCore.QRect(220, 0, 671, 611))
+      
+        arg_11ag = ["ieee 802.11a/g","0", "5000000000", "20000000", "54000000", "54000000", "0", "LIGHTSPEED",
+                    "0.1", "0", "omni", "0", "MACNPCSMA", "LLCNOP", "64", "1", "0", "1", "1"]
+        arg_11b = ["ieee 802.11b","1", "2400000000", "20000000", "11000000", "11000000", "0", "LIGHTSPEED",
+                   "0.032", "0", "omni", "0", "MACNPCSMA", "LLCNOP", "64", "1", "0", "1", "1"]
+        arg_11n = ["ieee 802.11n","2", "2400000000", "20000000", "100000000", "100000000", "0", "LIGHTSPEED",
+                   "0.1", "0", "MIMO", "0", "MACNPCSMA", "LLCNOP", "64", "1", "0", "1", "1"]
+        arg_zigbee = ["802.15.4(zigbee)","3", "2400000000", "915000000", "40000", "40000", "0", "LIGHTSPEED",
+                      "0.00135", "0", "SISO", "0", "MACNPCSMA", "LLCNOP", "64", "1", "0", "1", "1"]
+        arg_16 = ["802.16","4", "10000000000", "20000000", "30000000", "30000000", "0", "LIGHTSPEED",
+                  "0.1", "0", "SISO", "0", "MACNPCSMA", "LLCNOP", "64", "1", "0", "1", "1"]
+        argument = [arg_11ag, arg_11b, arg_11n, arg_zigbee, arg_16]
 
-        self.netword_card_formLayout = QtWidgets.QFormLayout(
-            self.formLayoutWidget)
-        basic = Basic(self.formLayoutWidget, self.netword_card_formLayout)
+        basic = Basic(self.formLayoutWidget, argument)
 
-        basic.create("label", "network card")
+        basic.create("label", "network card",False)
         basic.create("combox", ["ieee 802.11a/g", "ieee 802.11b",
-                     "ieee 802.11n", "802.15.4(zigbee)"], False)
-        
-        basic.create("label", "1D array index", True, "ArrIndi")
+                     "ieee 802.11n", "802.15.4(zigbee)", "802.16"], False,True)
+
+        basic.create("label", "1D array index",True, name="ArrIndi")
         basic.create("combox", ["0", "1", "2", "3", "4"],  True)
-        
-        basic.create("label", "Channel freauency", True, "freq")      
+
+        basic.create("label", "Channel freauency", True, name="freq")
         child1 = basic.createChild("combox", ["Hz", "MHz", "GHz"])
         child2 = basic.createChild("line", "5000000000", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Channel bandwidth", True, "band")
+        basic.create("label", "Channel bandwidth", True, name="band")
         child1 = basic.createChild("combox", ["Hz", "MHz", "GHz"])
         child2 = basic.createChild("line", "20000000", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Transmission rate for data", True, "dtxr")
+        basic.create("label", "Transmission rate for data", True, name="dtxr")
         child1 = basic.createChild("combox", ["bits/s", "Mbits/s", "Gbits/s"])
         child2 = basic.createChild("line", "54000000", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Transmission rate for control information", True, "ctxr")
+        basic.create(
+            "label", "Transmission rate for control information", True, name="ctxr")
         child1 = basic.createChild("combox", ["bits/s", "Mbits/s", "Gbits/s"])
         child2 = basic.createChild("line", "54000000", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Transmission distance", True, "txds")
+        basic.create("label", "Transmission distance", True, name="txds")
         child1 = basic.createChild("combox", ["m", "Km"])
         child2 = basic.createChild("line", "0", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Signal propagation speed", True, "sps")
+        basic.create("label", "Signal propagation speed", True, name="sps")
         basic.create("combox", ["LIGHTSPEED"], True)
 
-        basic.create("label", "Transmission power", True, "txpw")
+        basic.create("label", "Transmission power", True, name="txpw")
         child1 = basic.createChild("combox", ["Walt"])
         child2 = basic.createChild("line", "0.1", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Ambient noise", True, "noise")
+        basic.create("label", "Ambient noise", True, name="noise")
         child1 = basic.createChild("combox", ["Walt"])
         child2 = basic.createChild("line", "0", True)
         basic.createLayout("hbox", [child1, child2])
 
-        basic.create("label", "Antenna system", True, "antid")
+        basic.create("label", "Antenna system", True, name="antid")
         basic.create("combox", ["SISO", "MIMO", "directional", "omni"], True)
-        
-        basic.create("label", "FEC scheme", True, "fecid")
+
+        basic.create("label", "FEC scheme", True, name="fecid")
         basic.create("line", "0", True)
-        
-        basic.create("label", "MAC protocol", True, "macid")
+
+        basic.create("label", "MAC protocol", True, name="macid")
         basic.create("combox", ["MACNPCSMA"], True)
-        
-        basic.create("label", "LLC protocol", True, "llcid")
+
+        basic.create("label", "LLC protocol", True, name="llcid")
         basic.create("combox", ["LLCNOP"], True)
-        
-        basic.create("label", "Preamble length for physical transmission", True, "prlen")
+
+        basic.create(
+            "label", "Preamble length for physical transmission", True, name="prlen")
         child1 = basic.createChild("combox", ["bytes"])
         child2 = basic.createChild("line", "64", True)
         basic.createLayout("hbox", [child1, child2])
-        
-        basic.create("label", "Number of sub-channels", True, "nscha")
-        basic.create("spinbox", 0, True)
 
-        basic.create("label", "Communication media type", True, "mtype")
+        basic.create("label", "Number of sub-channels", True, name="nscha")
+        basic.create("spinbox", 1, True)
+
+        basic.create("label", "Communication media type", True, name="mtype")
         basic.create("combox", ["radio", "laser", "acoustic", "fiber"], True)
 
-        basic.create("label", "Communication mode", True, "cmode")
+        basic.create("label", "Communication mode", True, name="cmode")
         basic.create("combox", ["duple", "simplex"], True)
 
-        basic.create("label", "Default power model", True, "powermod")
+        basic.create("label", "Default power model", True,name= "powermod")
         basic.create("line", "1", True)
-        
+
         self.horizontalLayoutWidget = QtWidgets.QWidget(Form)
         self.horizontalLayoutWidget.setGeometry(
             QtCore.QRect(590, 610, 295, 41))
@@ -125,9 +137,14 @@ class MyApplication(QMainWindow):
         self.cancel_button.setText("cacel")
         self.horizontalLayout.addWidget(self.cancel_button)
 
+        self.arguments = basic.arguments
+        self.modules = basic.modules
+
+        basic.leader.currentIndexChanged.connect(lambda index:basic.updateValues(index))
+
         # 存放标签和值
         self.labels = basic.labels
-        self.values = basic.values
+        self.values = basic.modules
 
     def save_to_file(self):
         file_name, _ = QFileDialog.getSaveFileName(
@@ -138,8 +155,10 @@ class MyApplication(QMainWindow):
                 for label, value in zip(self.labels, self.values):
                     if isinstance(value, QComboBox):
                         value = value.currentText()
-                    elif isinstance(value, QLineEdit):
+                    elif isinstance(value, QLineEdit) :
                         value = value.text()
+                    elif  isinstance(value, QSpinBox):
+                        value = value.value()
                     file.write(f'{label} = {value}\n')
                 file.write('}\n')
         print("保存成功！")
