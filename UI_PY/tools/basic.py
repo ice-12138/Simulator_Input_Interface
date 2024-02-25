@@ -43,8 +43,6 @@ class basic():
                 self.modules.append(self.module_type)
             # 如果该选项会影响后面的value
             if leader:
-                # self.module_type.currentIndexChanged.connect(self.updateValues)
-                # print(self.module_type.currentText())
                 self.leader = self.module_type
 
         if module_type == "line":
@@ -103,4 +101,14 @@ class basic():
 
             if isinstance(self.modules[i],QtWidgets.QSpinBox):
                 self.modules[i].setValue(int(argument[i+1]))
+    
+    def updateValuesOpen(self,values):
+        for i in range(len(self.modules)):
+            if isinstance(self.modules[i],QtWidgets.QComboBox):
+                self.modules[i].setCurrentText(values[i])
+            if isinstance(self.modules[i],QtWidgets.QLineEdit):
+                self.modules[i].setText(values[i])
+
+            if isinstance(self.modules[i],QtWidgets.QSpinBox):
+                self.modules[i].setValue(int(values[i]))
 

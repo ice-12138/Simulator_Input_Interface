@@ -12,14 +12,14 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from tools.basic import basic as Basic
 import sys
-import time
-
+import re
 
 class MyApplication(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.save_button.clicked.connect(self.save_to_file)
+        self.open_button.clicked.connect(self.open_file)
 
     def setupUi(self, Form):
         Form.resize(894, 653)
@@ -38,6 +38,7 @@ class MyApplication(QMainWindow):
                   "0.1", "0", "SISO", "0", "MACNPCSMA", "LLCNOP", "64", "1", "0", "1", "1"]
         argument = [arg_11ag, arg_11b, arg_11n, arg_zigbee, arg_16]
 
+        global basic 
         basic = Basic(self.formLayoutWidget, argument)
 
         basic.create("label", "network card",False)
@@ -125,15 +126,12 @@ class MyApplication(QMainWindow):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.save_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.save_button.setObjectName("save_button")
         self.save_button.setText("save")
         self.horizontalLayout.addWidget(self.save_button)
         self.open_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.open_button.setObjectName("open_button")
         self.open_button.setText("open")
         self.horizontalLayout.addWidget(self.open_button)
         self.cancel_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.cancel_button.setObjectName("cancel_button")
         self.cancel_button.setText("cacel")
         self.horizontalLayout.addWidget(self.cancel_button)
 
@@ -145,6 +143,8 @@ class MyApplication(QMainWindow):
         # 存放标签和值
         self.labels = basic.labels
         self.values = basic.modules
+
+        self.base = basic
 
     def save_to_file(self):
         file_name, _ = QFileDialog.getSaveFileName(
@@ -162,6 +162,22 @@ class MyApplication(QMainWindow):
                     file.write(f'{label} = {value}\n')
                 file.write('}\n')
         print("保存成功！")
+
+    def open_file(self):
+        file_path,_ = QFileDialog.getOpenFileName(self,"Open File","","Text Files (*.txt)")
+        if file_path:
+            try:
+                with open(file_path,'r',encoding='utf-8') as file:
+                    content  = file.read()
+                    values = []
+                    # 使用正则表达式提取值
+                    pattern = r'=\s*(\S+)'
+                    matches = re.findall(pattern,content)
+                    values.extend(matches)
+                    basic.updateValuesOpen(int(values[0]) - 1,values)
+            except Exception as e:
+                self.waring_edit = QTextEdit(self.formLayoutWidget)
+                self.waring_edit.setPlainText("无法打开文件：{}".format(str(e)))
 
 
 def main():
