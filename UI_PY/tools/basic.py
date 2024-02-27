@@ -1,6 +1,7 @@
-from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
-import typing
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+
 # round:该组件在哪个范围
 # parent：该组件的父布局
 # alias:输出到txt中的名字
@@ -10,35 +11,41 @@ import typing
 # row：该组件位于父布局的第几行
 
 
-class basic():
-    def __init__(self, mainWindow,  arguments):
+class basic:
+    def __init__(self, mainWindow, arguments):
         self.mainWindow = mainWindow
-        self.parent = QtWidgets.QFormLayout(mainWindow)
+        self.parent = QFormLayout(mainWindow)
         self.row = -1
         self.arguments = arguments
         self.labels = []
         self.modules = []
         self.leader = ""
 
-    def create(self, module_type, text: str, output: bool = False, leader: bool = False, name: str = ""):
+    def create(
+        self,
+        module_type,
+        text: str,
+        output: bool = False,
+        leader: bool = False,
+        name: str = "",
+        input_type: str = "",
+    ):
 
         if module_type == "label":
             # 每个label标签换行
             self.row += 1
-            self.module_type = QtWidgets.QLabel(self.mainWindow)
+            self.module_type = QLabel(self.mainWindow)
             self.module_type.setText(text)
-            if isinstance(self.parent, QtWidgets. QFormLayout):
-                self.parent.setWidget(
-                    self.row, QtWidgets.QFormLayout.LabelRole, self.module_type)
+            if isinstance(self.parent, QFormLayout):
+                self.parent.setWidget(self.row, QFormLayout.LabelRole, self.module_type)
             if name != "":
                 self.labels.append(name)
 
         if module_type == "combox":
-            self.module_type = QtWidgets.QComboBox(self.mainWindow)
+            self.module_type = QComboBox(self.mainWindow)
             self.module_type.addItems(text)
-            if isinstance(self.parent, QtWidgets. QFormLayout):
-                self.parent.setWidget(
-                    self.row, QtWidgets.QFormLayout.FieldRole, self.module_type)
+            if isinstance(self.parent, QFormLayout):
+                self.parent.setWidget(self.row, QFormLayout.FieldRole, self.module_type)
             if output:
                 self.modules.append(self.module_type)
             # 如果该选项会影响后面的value
@@ -46,69 +53,86 @@ class basic():
                 self.leader = self.module_type
 
         if module_type == "line":
-            self.module_type = QtWidgets.QLineEdit(self.mainWindow)
+            self.module_type = QLineEdit(self.mainWindow)
             self.module_type.setText(text)
-            if isinstance(self.parent, QtWidgets.QFormLayout):
-                self.parent.setWidget(
-                    self.row, QtWidgets.QFormLayout.FieldRole, self.module_type)
+            if isinstance(self.parent, QFormLayout):
+                self.parent.setWidget(self.row, QFormLayout.FieldRole, self.module_type)
             if output:
                 self.modules.append(self.module_type)
 
         if module_type == "spinbox":
-            self.module_type = QtWidgets.QSpinBox(self.mainWindow)
+            self.module_type = QSpinBox(self.mainWindow)
             self.module_type.setValue(text)
-            if isinstance(self.parent, QtWidgets.QFormLayout):
-                self.parent.setWidget(
-                    self.row, QtWidgets.QFormLayout.FieldRole, self.module_type)
+            if isinstance(self.parent, QFormLayout):
+                self.parent.setWidget(self.row, QFormLayout.FieldRole, self.module_type)
             if output:
                 self.modules.append(self.module_type)
 
         return self.module_type
-    
+
     def createLayout(self, module_type, child):
         if module_type == "hbox":
-            self.layout = QtWidgets.QHBoxLayout()
+            self.layout = QHBoxLayout()
             for i in child:
                 self.layout.addWidget(i)
-            if isinstance(self.parent, QtWidgets.QFormLayout):
-                self.parent.setLayout(
-                    self.row, QtWidgets.QFormLayout.FieldRole, self.layout)
+            if isinstance(self.parent, QFormLayout):
+                self.parent.setLayout(self.row, QFormLayout.FieldRole, self.layout)
 
-    def createChild(self, module_type, text: str, output: bool = False):
-
+    def createChild(
+        self, module_type, text: str, output: bool = False, input_type: str = ""
+    ):
         if module_type == "combox":
-            self.module_type = QtWidgets.QComboBox(self.mainWindow)
+            self.module_type = QComboBox(self.mainWindow)
             self.module_type.addItems(text)
             if output:
                 self.modules.append(self.module_type)
 
         if module_type == "line":
-            self.module_type = QtWidgets.QLineEdit(self.mainWindow)
+            self.module_type = QLineEdit(self.mainWindow)
             self.module_type.setText(text)
             if output:
                 self.modules.append(self.module_type)
 
+        if input_type == "str":
+            regex = QRegExp("[a-zA-Z]+")
+            validator = QRegExpValidator(regex)
+            self.module_type.setValidator(validator)
+
+        if input_type == "num":
+            regex = QRegExp("[0-9]+")
+            validator = QRegExpValidator(regex)
+            self.module_type.setValidator(validator)
+
         return self.module_type
-    
+
     def updateValues(self, index):
         argument = self.arguments[index]
         for i in range(len(self.modules)):
-            if isinstance(self.modules[i],QtWidgets.QComboBox):
-                self.modules[i].setCurrentText(argument[i+1])
-                
-            if isinstance(self.modules[i],QtWidgets.QLineEdit):
-                self.modules[i].setText(argument[i+1])
+            if isinstance(self.modules[i], QComboBox):
+                self.modules[i].setCurrentText(argument[i + 1])
 
-            if isinstance(self.modules[i],QtWidgets.QSpinBox):
-                self.modules[i].setValue(int(argument[i+1]))
-    
-    def updateValuesOpen(self,values):
+            if isinstance(self.modules[i], QLineEdit):
+                self.modules[i].setText(argument[i + 1])
+
+            if isinstance(self.modules[i], QSpinBox):
+                self.modules[i].setValue(int(argument[i + 1]))
+
+    def updateValuesOpen(self, values):
         for i in range(len(self.modules)):
-            if isinstance(self.modules[i],QtWidgets.QComboBox):
+            if isinstance(self.modules[i], QComboBox):
                 self.modules[i].setCurrentText(values[i])
-            if isinstance(self.modules[i],QtWidgets.QLineEdit):
+            if isinstance(self.modules[i], QLineEdit):
                 self.modules[i].setText(values[i])
 
-            if isinstance(self.modules[i],QtWidgets.QSpinBox):
+            if isinstance(self.modules[i], QSpinBox):
                 self.modules[i].setValue(int(values[i]))
 
+    # def show_warning(self, waring_context):
+    #     # 创建警告对话框
+    #     warning = QMessageBox.warning(
+    #         self.parent, "警示", waring_context, QMessageBox.Ok
+    #     )
+
+    #     # 如果用户点击了 Ok 按钮，则关闭警告窗口
+    #     if warning == QMessageBox.Ok:
+    #         warning.close()
