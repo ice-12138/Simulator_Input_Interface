@@ -10,7 +10,10 @@
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from tools.basic import basic as Basic
+from tools.basic import Basic
+from enums.unit import *
+from enums.module_type import *
+from enums.input_type import *
 import sys
 import re
 
@@ -137,9 +140,9 @@ class MyApplication(QMainWindow):
         global basic
         basic = Basic(self.formLayoutWidget, argument)
 
-        basic.create("label", "network card", False)
+        basic.create(Module.LABEL, "network card", False)
         basic.create(
-            "combox",
+            Module.COMBOX,
             [
                 "ieee 802.11a/g",
                 "ieee 802.11b",
@@ -151,79 +154,82 @@ class MyApplication(QMainWindow):
             True,
         )
 
-        basic.create("label", "1D array index", True, name="ArrIndi")
-        basic.create("combox", ["0", "1", "2", "3", "4"], True)
+        basic.create(Module.LABEL, "1D array index", True, name="ArrIndi")
+        basic.create(Module.COMBOX, ["0", "1", "2", "3", "4"], True)
 
-        basic.create("label", "Channel freauency", True, name="freq")
-        child1 = basic.createChild("combox", ["Hz", "MHz", "GHz"])
-        child2 = basic.createChild("line", "5000000000", True, "num")
-        basic.createLayout("hbox", [child1, child2])
+        basic.create(Module.LABEL, "Channel freauency", True, name="freq")
+        child1 = basic.createChild(Module.COMBOX, FrequencyUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "5000000000", True, InputType.DIGIT)
+        basic.createLayout(Layout.HBOX, [child1, child2])
 
-        basic.create("label", "Channel bandwidth", True, name="band")
-        child1 = basic.createChild("combox", ["Hz", "MHz", "GHz"])
-        child2 = basic.createChild("line", "20000000", True)
-        basic.createLayout("hbox", [child1, child2])
+        basic.create(Module.LABEL, "Channel bandwidth", True, name="band")
+        child1 = basic.createChild(Module.COMBOX, FrequencyUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "20000000", True, InputType.DIGIT)
+        basic.createLayout(Layout.HBOX, [child1, child2])
 
-        basic.create("label", "Transmission rate for data", True, name="dtxr")
-        child1 = basic.createChild("combox", ["bits/s", "Mbits/s", "Gbits/s"])
-        child2 = basic.createChild("line", "54000000", True)
-        basic.createLayout("hbox", [child1, child2])
-
-        basic.create(
-            "label", "Transmission rate for control information", True, name="ctxr"
-        )
-        child1 = basic.createChild("combox", ["bits/s", "Mbits/s", "Gbits/s"])
-        child2 = basic.createChild("line", "54000000", True)
-        basic.createLayout("hbox", [child1, child2])
-
-        basic.create("label", "Transmission distance", True, name="txds")
-        child1 = basic.createChild("combox", ["m", "Km"])
-        child2 = basic.createChild("line", "0", True)
-        basic.createLayout("hbox", [child1, child2])
-
-        basic.create("label", "Signal propagation speed", True, name="sps")
-        basic.create("combox", ["LIGHTSPEED"], True)
-
-        basic.create("label", "Transmission power", True, name="txpw")
-        child1 = basic.createChild("combox", ["Walt"])
-        child2 = basic.createChild("line", "0.1", True)
-        basic.createLayout("hbox", [child1, child2])
-
-        basic.create("label", "Ambient noise", True, name="noise")
-        child1 = basic.createChild("combox", ["Walt"])
-        child2 = basic.createChild("line", "0", True)
-        basic.createLayout("hbox", [child1, child2])
-
-        basic.create("label", "Antenna system", True, name="antid")
-        basic.create("combox", ["SISO", "MIMO", "directional", "omni"], True)
-
-        basic.create("label", "FEC scheme", True, name="fecid")
-        basic.create("line", "0", True)
-
-        basic.create("label", "MAC protocol", True, name="macid")
-        basic.create("combox", ["MACNPCSMA"], True)
-
-        basic.create("label", "LLC protocol", True, name="llcid")
-        basic.create("combox", ["LLCNOP"], True)
+        basic.create(Module.LABEL, "Transmission rate for data", True, name="dtxr")
+        child1 = basic.createChild(Module.COMBOX, SpeedUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "54000000", True, InputType.DIGIT)
+        basic.createLayout(Layout.HBOX, [child1, child2])
 
         basic.create(
-            "label", "Preamble length for physical transmission", True, name="prlen"
+            Module.LABEL, "Transmission rate for control information", True, name="ctxr"
         )
-        child1 = basic.createChild("combox", ["bytes"])
-        child2 = basic.createChild("line", "64", True)
-        basic.createLayout("hbox", [child1, child2])
+        child1 = basic.createChild(Module.COMBOX, SpeedUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "54000000", True, InputType.DIGIT)
+        basic.createLayout(Layout.HBOX, [child1, child2])
 
-        basic.create("label", "Number of sub-channels", True, name="nscha")
-        basic.create("spinbox", 1, True)
+        basic.create(Module.LABEL, "Transmission distance", True, name="txds")
+        child1 = basic.createChild(Module.COMBOX, DistanceUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "0", True, InputType.DIGIT)
+        basic.createLayout(Layout.HBOX, [child1, child2])
 
-        basic.create("label", "Communication media type", True, name="mtype")
-        basic.create("combox", ["radio", "laser", "acoustic", "fiber"], True)
+        basic.create(Module.LABEL, "Signal propagation speed", True, name="sps")
+        basic.create(Module.COMBOX, ["LIGHTSPEED"], True)
 
-        basic.create("label", "Communication mode", True, name="cmode")
-        basic.create("combox", ["duple", "simplex"], True)
+        basic.create(Module.LABEL, "Transmission power", True, name="txpw")
+        child1 = basic.createChild(Module.COMBOX, PowerUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "0.1", True)
+        basic.createLayout(Layout.HBOX, [child1, child2])
 
-        basic.create("label", "Default power model", True, name="powermod")
-        basic.create("line", "1", True)
+        basic.create(Module.LABEL, "Ambient noise", True, name="noise")
+        child1 = basic.createChild(Module.COMBOX, PowerUnit.array())
+        child2 = basic.createChild(Module.LINEEDIT, "0", True)
+        basic.createLayout(Layout.HBOX, [child1, child2])
+
+        basic.create(Module.LABEL, "Antenna system", True, name="antid")
+        basic.create(Module.COMBOX, ["SISO", "MIMO", "directional", "omni"], True)
+
+        basic.create(Module.LABEL, "FEC scheme", True, name="fecid")
+        basic.create(Module.LINEEDIT, "0", True)
+
+        basic.create(Module.LABEL, "MAC protocol", True, name="macid")
+        basic.create(Module.COMBOX, ["MACNPCSMA"], True)
+
+        basic.create(Module.LABEL, "LLC protocol", True, name="llcid")
+        basic.create(Module.COMBOX, ["LLCNOP"], True)
+
+        basic.create(
+            Module.LABEL,
+            "Preamble length for physical transmission",
+            True,
+            name="prlen",
+        )
+        child1 = basic.createChild(Module.COMBOX, ["bytes"])
+        child2 = basic.createChild(Module.LINEEDIT, "64", True)
+        basic.createLayout(Layout.HBOX, [child1, child2])
+
+        basic.create(Module.LABEL, "Number of sub-channels", True, name="nscha")
+        basic.create(Module.SPINBOX, 1, True)
+
+        basic.create(Module.LABEL, "Communication media type", True, name="mtype")
+        basic.create(Module.COMBOX, ["radio", "laser", "acoustic", "fiber"], True)
+
+        basic.create(Module.LABEL, "Communication mode", True, name="cmode")
+        basic.create(Module.COMBOX, ["duple", "simplex"], True)
+
+        basic.create(Module.LABEL, "Default power model", True, name="powermod")
+        basic.create(Module.LINEEDIT, "1", True)
 
         self.horizontalLayoutWidget = QWidget(Form)
         self.horizontalLayoutWidget.setGeometry(QRect(590, 610, 295, 41))
