@@ -221,22 +221,6 @@ class NetWork:
         basic.create(Module.LABEL, "Default power model", True, name="powermod")
         basic.create(Module.LINEEDIT, "1", True)
 
-        # self.horizontalLayoutWidget = QWidget()
-        # self.horizontalLayoutWidget.setGeometry(QRect(590, 610, 295, 41))
-        # self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        # self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
-        # self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        # self.horizontalLayout.setObjectName("horizontalLayout")
-        # self.save_button = QPushButton(self.horizontalLayoutWidget)
-        # self.save_button.setText("save")
-        # self.horizontalLayout.addWidget(self.save_button)
-        # self.open_button = QPushButton(self.horizontalLayoutWidget)
-        # self.open_button.setText("open")
-        # self.horizontalLayout.addWidget(self.open_button)
-        # self.cancel_button = QPushButton(self.horizontalLayoutWidget)
-        # self.cancel_button.setText("cacel")
-        # self.horizontalLayout.addWidget(self.cancel_button)
-
         self.arguments = basic.arguments
         self.modules = basic.modules
 
@@ -250,38 +234,4 @@ class NetWork:
         self.labels = basic.labels
         self.values = basic.modules
 
-    def save_to_file(self):
-        file_name, _ = QFileDialog.getSaveFileName(
-            self, "Save File", "", "Text Files (*.txt)"
-        )
-        if file_name:
-            with open(file_name, "w") as file:
-                file.write("{\n")
-                for label, value in zip(self.labels, self.values):
-                    if isinstance(value, QComboBox):
-                        value = value.currentText()
-                    elif isinstance(value, QLineEdit):
-                        value = value.text()
-                    elif isinstance(value, QSpinBox):
-                        value = value.value()
-                    file.write(f"{label} = {value}\n")
-                file.write("}\n")
-        print("保存成功！")
-
-    def open_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(
-            self, "Open File", "", "Text Files (*.txt)"
-        )
-        if file_path:
-            try:
-                with open(file_path, "r", encoding="utf-8") as file:
-                    content = file.read()
-                    values = []
-                    # 使用正则表达式提取值
-                    pattern = r"=\s*(\S+)"
-                    matches = re.findall(pattern, content)
-                    values.extend(matches)
-                    basic.updateValuesOpen(values)
-            except Exception as e:
-                self.waring_edit = QTextEdit(self.formLayoutWidget)
-                self.waring_edit.setPlainText("无法打开文件：{}".format(str(e)))
+        return basic

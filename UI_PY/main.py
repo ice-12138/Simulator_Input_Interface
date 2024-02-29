@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from children_window.network_card import NetWork
+from tools import read_out as ro
 import sys
 
 
@@ -32,17 +33,18 @@ class MyApplication(QMainWindow):
         # height_margin = margin_percent * window_width
         # 左侧
         left_widget = QListWidget(self)
-        left_widget.addItem("联系人1")
-        left_widget.addItem("联系人2")
-        left_widget.addItem("联系人3")
+        left_widget.addItem("network")
+        left_widget.addItem("router")
+        left_widget.addItem("environment")
         layout.addWidget(left_widget)
         # 右侧
         right_widget = QWidget(self)
         right_layout = QVBoxLayout(right_widget)
         # 右上方
         right_up_widget = QWidget(self)
+
         right_up_layout = NetWork()
-        right_up_layout.generate_window(right_up_widget)
+        basic = right_up_layout.generate_window(right_up_widget)
 
         # # 右下方
         right_down_widget = QWidget(self)
@@ -50,12 +52,15 @@ class MyApplication(QMainWindow):
 
         save_button = QPushButton(right_down_widget)
         save_button.setText("save")
+        save_button.clicked.connect(lambda: ro.ReadOut.save_to_file(self, basic))
         right_down_layout.addWidget(save_button)
         open_button = QPushButton(right_down_widget)
         open_button.setText("open")
+        open_button.clicked.connect(lambda: ro.ReadOut.open_file(self, basic))
         right_down_layout.addWidget(open_button)
         cancel_button = QPushButton(right_down_widget)
         cancel_button.setText("cacel")
+        cancel_button.clicked.connect(self.close)
         right_down_layout.addWidget(cancel_button)
 
         right_layout.addWidget(right_up_widget)
