@@ -8,3 +8,8 @@ pyuic5 -o XX.py XX.ui
 - 删除功能或者文件 [DEL] + detail
 
 运行main.py文件启动
+
+
+打包代码：
+- cd到所需打包程序的文件夹
+- pyinstaller -F -w demo.py
