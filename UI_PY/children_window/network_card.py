@@ -14,6 +14,7 @@ from tools.basic import Basic
 from enums.unit import *
 from enums.module_type import *
 from enums.input_type import *
+from enums.args import *
 import sys
 import re
 
@@ -43,7 +44,7 @@ class NetWork:
         ]
         arg_11b = [
             "ieee 802.11b",
-            "1",
+            "0",
             "2400000000",
             "20000000",
             "11000000",
@@ -64,7 +65,7 @@ class NetWork:
         ]
         arg_11n = [
             "ieee 802.11n",
-            "2",
+            "0",
             "2400000000",
             "20000000",
             "100000000",
@@ -85,7 +86,7 @@ class NetWork:
         ]
         arg_zigbee = [
             "802.15.4(zigbee)",
-            "3",
+            "0",
             "2400000000",
             "915000000",
             "40000",
@@ -106,7 +107,7 @@ class NetWork:
         ]
         arg_16 = [
             "802.16",
-            "4",
+            "0",
             "10000000000",
             "20000000",
             "30000000",
@@ -188,7 +189,7 @@ class NetWork:
         basic.createLayout(Layout.HBOX, [child1, child2])
 
         basic.create(Module.LABEL, "Antenna system", True, name="antid")
-        basic.create(Module.COMBOX, ["SISO", "MIMO", "directional", "omni"], True)
+        basic.create(Module.COMBOX, Antid.array(), True)
 
         basic.create(Module.LABEL, "FEC scheme", True, name="fecid")
         basic.create(Module.LINEEDIT, "0", True)
@@ -213,10 +214,10 @@ class NetWork:
         basic.create(Module.SPINBOX, 1, True)
 
         basic.create(Module.LABEL, "Communication media type", True, name="mtype")
-        basic.create(Module.COMBOX, ["radio", "laser", "acoustic", "fiber"], True)
+        basic.create(Module.COMBOX, Mtype.array(), True)
 
         basic.create(Module.LABEL, "Communication mode", True, name="cmode")
-        basic.create(Module.COMBOX, ["duple", "simplex"], True)
+        basic.create(Module.COMBOX, Cmode.array(), True)
 
         basic.create(Module.LABEL, "Default power model", True, name="powermod")
         basic.create(Module.LINEEDIT, "1", True)

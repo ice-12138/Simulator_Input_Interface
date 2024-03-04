@@ -1,0 +1,107 @@
+%-All the following parameters must be assigned with particular settings to be defined by users. Any null assignment will pause simulation running.
+%-The parameter names cannot be modified, and must be followed immediately by"=", which is then followed immediately by the setting only.
+%-All comments/explanations are started by "%". and cannot be in the same line as those of parameter assignment.
+%Scope beginning:
+ScopeBegin
+%Source for node 0,0:
+{
+ArrIndi=0
+ArrIndj=0
+%Traffic generation mode: from a file with virtual/real data, otherwise from a model:
+tragenmode=APPSRCFROMFILER
+%Network address type: ipv4, ipv6.....
+addtype=L3GFIPV4 
+%Destination address of the user:
+%Network address:
+netaddress=172.160.127.2
+%Start time of data, -1 means an inactive source:
+starttime=0
+%QoS type:
+qostype=QOSTEST
+%Assigned port number (2 bytes) for this traffic source:
+port=0
+%File path for file-based (path+filename) (the formate is defined by userself but need to match the programe)
+fileparameter=config\\data_source_rfile0.txt
+}
+%Source for node 0,1:
+{
+ArrIndi=0
+ArrIndj=1
+%Traffic generation mode: from a file with virtual/real data, otherwise from a model:
+tragenmode=APPSRCMODONOFF
+%Network address type: ipv4, ipv6.....
+addtype=L3GFIPV4  
+%Destination address of the user:
+%Network address:
+netaddress=172.160.127.3
+%Start time of data, -1 means an inactive source:
+starttime=0.0
+%QoS type:
+qostype=QOSTEST
+%Assigned port number (2 bytes) for this traffic source:
+port=0
+%Paramter setting for on-off model: mean on;traffic generation rate;mean off:
+fileparameter=0.01;2;0.1
+}
+%Source for node 1:
+{
+ArrIndi=1
+ArrIndj=0-1
+%Traffic generation mode: from a file with virtual/real data, otherwise from a model:
+tragenmode=APPSRCMODDATACBR
+%Network address type: ipv4, ipv6.....
+addtype=L3GFIPV4 
+%Destination address of the user:
+%Network address:
+netaddress=172.160.127.80
+%Start time of data, -1 means an inactive source:
+starttime=0
+%QoS type:
+qostype=QOSTEST
+%Assigned port number (2 bytes) for this traffic source:
+port=0
+%Parameter settings separated by ";" for model-based (the formate is defined by userself but need to match the programe. here packet length and time interval):
+fileparameter=100;0.01
+}
+%Sources for node 2:
+{
+ArrIndi=2-3
+ArrIndj=0-1
+%Traffic generation mode: from a file with virtual/real data, otherwise from a model:
+tragenmode=APPSRCFROMFILEV
+%Network address type: ipv4, ipv6.....
+addtype=L3GFIPV4  
+%Destination address of the user:
+%Network address:
+netaddress=172.160.127.60
+%Start time of data, -1 means an inactive source:
+starttime=0
+%QoS type:
+qostype=QOSTEST
+%Assigned port number (2 bytes) for this traffic source:
+port=0
+%File path for file-based (path+filename) mode (the formate is defined by userself but need to match the programe):
+fileparameter=config\\data_source_vfile0.txt
+}
+%Sources for node 3-14:
+{
+ArrIndi=4-14
+ArrIndj=0-1
+%Traffic generation mode: from a file with virtual/real data, otherwise from a model:
+tragenmode=APPSRCFROMFILEV
+%Network address type: ipv4, ipv6.....
+addtype=L3GFIPV4
+%Destination address of the user:
+%Network address:
+netaddress=172.160.127.100
+%Start time of data, -1 means an inactive source:
+starttime=-1
+%QoS type:
+qostype=QOSTEST
+%Next input position in the file updated on realtime:
+posinfile=0
+%File path for file-based (path+filename) mode (the formate is defined by userself but need to match the programe):
+fileparameter=0
+}
+%Scope end:
+ScopeEnd

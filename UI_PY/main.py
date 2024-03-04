@@ -11,7 +11,7 @@ class MyApplication(QMainWindow):
         self.setupUi()
 
     def setupUi(self):
-        self.setWindowTitle("网络参数选择")
+        self.setWindowTitle("仿真参数选择")
         # 获取屏幕尺寸
         screen_size = QApplication.primaryScreen().size()
         width_percent = 0.4
@@ -33,18 +33,49 @@ class MyApplication(QMainWindow):
         # height_margin = margin_percent * window_width
         # 左侧
         left_widget = QListWidget(self)
+        layout.addWidget(left_widget)
+
         left_widget.addItem("network")
         left_widget.addItem("router")
         left_widget.addItem("environment")
-        layout.addWidget(left_widget)
+
+        left_widget.itemClicked.connect(self.on_btn_clicked)
+
+        # left_widget = QListWidget(self)
+        # left_widget.addItem("network")
+        # left_widget.addItem("router")
+        # left_widget.addItem("environment")
+        # layout.addWidget(left_widget)
         # 右侧
         right_widget = QWidget(self)
         right_layout = QVBoxLayout(right_widget)
         # 右上方
-        right_up_widget = QWidget(self)
+        # right_up_widget = QWidget(self)
 
+        # right_up_layout = NetWork()
+        # basic = right_up_layout.generate_window(right_up_widget)
+
+        # 设置右侧堆载窗口
+        self.right_up_widget = QStackedWidget()
+        right_layout.addWidget(self.right_up_widget)
+
+        # 网卡参数面板
+        self.network_widget = QWidget()
         right_up_layout = NetWork()
-        basic = right_up_layout.generate_window(right_up_widget)
+        basic = right_up_layout.generate_window(self.network_widget)
+
+        # 路由器参数面板
+        self.router_widget = QWidget()
+        lable2 = QLabel("路由器参数面板", self.router_widget)
+
+        # 环境参数面板
+        self.environment_widget = QWidget()
+        lable3 = QLabel("环境参数面板", self.environment_widget)
+
+        # 把参数面板加到堆载窗口中
+        self.right_up_widget.addWidget(self.network_widget)
+        self.right_up_widget.addWidget(self.router_widget)
+        self.right_up_widget.addWidget(self.environment_widget)
 
         # # 右下方
         right_down_widget = QWidget(self)
@@ -63,12 +94,21 @@ class MyApplication(QMainWindow):
         cancel_button.clicked.connect(self.close)
         right_down_layout.addWidget(cancel_button)
 
-        right_layout.addWidget(right_up_widget)
+        right_layout.addWidget(self.right_up_widget)
         right_layout.addWidget(right_down_widget)
 
         layout.addWidget(right_widget)
 
         central_widget.setLayout(layout)
+
+    def on_btn_clicked(self, item):
+        device_name = item.text()
+        if device_name == "network":
+            self.right_up_widget.setCurrentIndex(0)
+        elif device_name == "router":
+            self.right_up_widget.setCurrentIndex(1)
+        elif device_name == "environment":
+            self.right_up_widget.setCurrentIndex(2)
 
 
 if __name__ == "__main__":

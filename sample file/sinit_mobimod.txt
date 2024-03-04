@@ -1,0 +1,52 @@
+%%sinit_mobimod.txt
+%-All the following parameters must be assigned with particular settings to be defined by users. Any null assignment will pause simulation running.
+%-The parameter names cannot be modified, and must be followed immediately by"=", which is then followed immediately by the setting only.
+%-All comments/explanations are started by "%". and cannot be in the same line as those of parameter assignment.
+%-Here “fileparameter” may be either 1) parameter settings separated by ";" for mathematical function defined mode or 2) the file path for file-based (path+filename) mode. The formate is defined by userself but need to match with the programe.  
+% For mathematical function defined modes, a general “fileparameter” can be in the following form: pause interval parameter set.epoch parameter set, velocity parameter set (in x,y,z)。 The number of parameters for each set depends on the adopted mathematical functions.   
+%Scope beginning:
+ScopeBegin
+%Node 1-14
+{
+%Array index:
+ArrIndi=1-14
+%Mobility model:
+mobilmod=MOBIRANDOMWAY   
+%Epoch length:
+epoch=0
+%Beginning time of epoch:
+btoe=-1
+%Position in 3D:
+pos.x=0.1
+pos.y=0
+pos.z=0
+%Velocity in 3D:
+dcv.x=0.01
+dcv.y=0
+dcv.z=0
+%Parameter setting formate (mean pause, epoch, vx,vy,vz):
+fileparameter=0;0.25;0.2;0.3;0.4
+}
+%Node 0
+{
+%Array index:
+ArrIndi=0
+%Mobility model:
+mobilmod=MOBITRACEFILE  
+%Epoch length:
+epoch=0
+%Beginning time of epoch:
+btoe=-1
+%Position in 3D:
+pos.x=0.005
+pos.y=0
+pos.z=0
+%Velocity in 3D:
+dcv.x=0
+dcv.y=0
+dcv.z=0
+%File path for file-based (path+filename) mode (the formate is defined by userself but need to match the programe):
+fileparameter=config\\mobi_trace_file0.txt
+}
+%Scope end:
+ScopeEnd

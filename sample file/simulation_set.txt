@@ -1,0 +1,138 @@
+%-All the following parameters must be assigned with particular settings to be defined by users. Any null assignment will pause simulation running.
+%-The parameter names cannot be modified, and must be followed immediately by"=", which is then followed immediately by the setting only.
+%-All comments/explanations are started by "%". and cannot be in the same line as those of parameter assignment.
+%Simulation name（It cannot be null. The system will create a 'simulation name'_out.txt in the appending mode for output):
+
+%===Basic settings defined by the users (compulsory setting)===
+simulation_name=test
+%Number of seeds used for random number generation
+simulation_seed=200000
+%Total simulation running time:
+simulation_end_time=0.1
+%Total number of communication interface types used in simulation:
+tncity=7
+%Total number of application QoS types:
+tnappqosty=4
+%Total number of noise types:
+tnnoisety=2
+%Total number of noise sources depolyed in simulation:
+tnnoisesrc=3
+%Total number of network nodes depolyed in simulation:
+tnnode=15
+%Transport socket size for transmission
+transcktsize=5
+%Transport socket size for reception
+recescktsize=5
+%Statistic interval used to update data recording:
+statinterval=0.001
+%Zero value output control for statistic () interval used to update data recording:
+zerorecord=false
+%Test message output control (true: message is output to logfile)
+testswitch=true
+
+%Configure the communication interface types used in the simulation (compulsory setting):
+config_city_file=config\\config_city.txt
+%Configure the application QoS types used in the simulation  (compulsory setting):
+config_appqos_file=config\\config_appqos.txt
+%Configure the noise types used in the simulation  (compulsory setting):
+config_noise_file=config\\config_noise.txt
+%Configure the data sources for each network node in the simulation  (compulsory setting):
+init_datasrc_file=input\\init_datasrc.txt
+
+%===Simulation initialization for each node (compulsory setting)===
+%Initialize network nodes:
+sinit_nnode_file=input\\sinit_nnode.txt
+%Initialize node mobility:
+sinit_mobimod_file=input\\sinit_mobimod.txt
+%Initialize traffic source file:
+sinit_trasrc_file=input\\sinit_trasrc.txt
+%Initialize application layer buffer:
+sinit_appbuf_file=input\\sinit_appbuf.txt
+%Initialize application layer receiver buffer:
+sinit_apprec_file=input\\sinit_apprec.txt
+%Initialize node's transport layer socket file:
+sinit_xsocket_file=input\\sinit_xsocket.txt
+%Initialize node's transport layer buffer file:
+sinit_trabuf_file=input\\sinit_trabuf.txt
+%Initialize node's transport layer receiver buffer file:
+sinit_trarec_file=input\\sinit_trarec.txt
+%Initialize network ports for each node:
+sinit_nport_file=input\\sinit_nport.txt
+%Initialize node's network layer buffer file:
+sinit_netbuf_file=input\\sinit_netbuf.txt
+%Initialize node's network layer receiver buffer file:
+sinit_netrec_file=input\\sinit_netrec.txt
+%Initialize node's data link buffer:
+sinit_dllbuf_file=input\\sinit_dllbuf.txt
+%Initialize node's data link receiver:
+sinit_dllrec_file=input\\sinit_dllrec.txt
+%Initialize node's physical layer buffer:
+sinit_phybuf_file=input\\sinit_phybuf.txt
+%Initialize node's physical receiver:
+sinit_phyrec_file=input\\sinit_phyrec.txt
+%Initialize node's data link receiver file:
+sinit_dllrec_file=input\\sinit_dllrec.txt
+%Initialize node's physical layer:
+sinit_phybuf_file=input\\sinit_phybuf.txt
+%Initialize node's physical layer receiver:
+sinit_phyrec_file=input\\sinit_phyrec.txt
+%Initialize communication cards for each node:
+sinit_ccard_file=input\\sinit_ccard.txt
+
+%==Bias initialization for adjustment to the simulation initialization（optional with xx_ctrl is set to 1, which is checked by funtion setfilecheck()）===
+%Initialize network nodes (optional setting, if no, binit_nnode_ctrl=0, otherwise binit_nnode_ctrl=0 followed by the initial file name):
+binit_nnode_ctrl=0
+%Initialize network node file:
+binit_nnode_file=input\\binit_nnode.txt
+%Initialize traffic sources (optional setting, if no, binit_trasrc_ctrl=0, otherwise =1 followed by the initial file name):
+binit_trasrc_ctrl=0
+%Initialize traffic source file:
+binit_trasrc_file=input\\binit_trasrc.txt
+%Initialize application layer buffer (optional setting: if no, binit_appbuf_ctrl=0, otherwise =1 followed by the initial file name):
+binit_appbuf_ctrl=0
+%Initialize node's application layer buffer file:
+binit_appbuf_file=input\\binit_appbuf.txt
+%Initialize application layer receiver buffer (optional setting: if no, binit_apprec_ctrl=0, otherwise =1 followed by the initial file name):
+binit_apprec_ctrl=0
+%Initialize node's application layer receiver buffer file:
+binit_apprec_file=input\\binit_apprec.txt
+%Initialize transport layer buffer (optional setting: if no, binit_trabuf_ctrl=0, otherwise =1 followed by the initial file name):
+binit_trabuf_ctrl=0
+%Initialize node's transport layer buffer file:
+binit_trabuf_file=input\\binit_trabuf.txt
+%Initialize transport layer receiver buffer (optional setting: if no, binit_trarec_ctrl=0, otherwise =1 followed by the initial file name):
+binit_trarec_ctrl=0
+%Initialize node's transport layer receiver buffer file:
+binit_trarec_file=input\\binit_trarec.txt
+%Initialize network layer buffer (optional setting: if no, binit_netbuf_ctrl=0, otherwise =1 followed by the initial file name):
+binit_netbuf_ctrl=0
+%Initialize node's network layer buffer file:
+binit_netbuf_file=input\\binit_netbuf.txt
+%Initialize network layer receiver buffer (optional setting: if no, binit_netrec_ctrl=0, otherwise =1 followed by the initial file name):
+binit_netrec_ctrl=0
+%Initialize node's network layer receiver buffer file:
+binit_netrec_file=input\\binit_netrec.txt
+%Initialize node's data link buffer (optional setting: if no, binit_dllbuf_ctrl=0, otherwise =1 followed by the initial file name):
+binit_dllbuf_ctrl=0
+%Initialize node's data link buffer file:
+binit_dllbuf_file=input\\binit_dllbuf.txt
+%Initialize node's data link receiver (optional setting: if no, binit_dllrec_ctrl=0, otherwise binit_dllrec_ctrl=0 followed by the initial file name):
+binit_dllrec_ctrl=0
+%Initialize node's data link receiver file:
+binit_dllrec_file=input\\binit_dllrec.txt
+%Initialize node's physical layer (optional setting: if no, binit_phybuf_ctrl=0, otherwise binit_phybuf_ctrl=0 followed by the initial file name):
+binit_phybuf_ctrl=0
+%Initialize node's physical layer buffer file:
+binit_phybuf_file=input\\binit_phybuf.txt
+%Initialize node's physical link receiver (optional setting: if no, binit_phyrec_ctrl=0, otherwise =1 followed by the initial file name):
+binit_phyrec_ctrl=0
+%Initialize node's physical layer receiver file:
+binit_phyrec_file=input\\binit_phyrec.txt
+%Initialize network port of nodes (optional setting: if no, binit_nport_ctrl=0, otherwise =1 followed by the initial file name):
+binit_nport_ctrl=0
+%Initialize network port file:
+binit_nport_file=input\\binit_nport.txt
+%Initialize communication card of nodes (optional setting: if no, binit_ccard_ctrl=0, otherwise =1 followed by the initial file name):
+binit_ccard_ctrl=0
+%Initialize communication card file:
+binit_ccard_file=input\\binit_ccard.txt

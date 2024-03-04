@@ -1,0 +1,11 @@
+%%%-All the following parameters must be assigned with particular settings to be defined by users. Any null assignment will pause simulation running.
+%-The parameter names cannot be modified, and must be followed immediately by"=", which is then followed immediately by the setting only.
+%-All comments/explanations are started by "%". and cannot be in the same line as those of parameter assignment.
+%Scope beginning:
+ScopeBegin
+{
+ArrIndi=0-14
+netrecsize=10
+}
+%Scope end:
+ScopeEnd

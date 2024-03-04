@@ -1,0 +1,62 @@
+%%%-All the following parameters must be assigned with particular settings to be defined by users. Any null assignment will pause simulation running.
+%-The parameter names cannot be modified, and must be followed immediately by"=", which is then followed immediately by the setting only.
+%-All comments/explanations are started by "%". and cannot be in the same line as those of parameter assignment.
+%%Specific network port:
+%Beginning of scope:
+ScopeBegin
+%Node 0-4,j=0:
+{
+ArrIndi=0-4
+ArrIndj=0
+dsnadd=2
+type=L3GFIPV4
+%File path or parameter setting:    
+srcfileparameter=tobeset
+}
+%Node 5-9,j=1:
+{
+ArrIndi=5-9
+ArrIndj=1
+dsnadd=0
+type=L3GFIPV4
+%File path or parameter setting:    
+srcfileparameter=tobeset
+}
+%Node 10-14,j=1:
+{
+ArrIndi=10-14
+ArrIndj=1
+dsnadd=4
+type=L3GFIPV4
+%File path or parameter setting:    
+srcfileparameter=tobeset
+}
+%Node 0-4,j=1:
+{
+ArrIndi=0-4
+ArrIndj=1
+dsnadd=2
+type=L3GFIPV4
+%File path or parameter setting:    
+srcfileparameter=tobeset
+}
+%Node 5-9,j=0:
+{
+ArrIndi=5-9
+ArrIndj=0
+dsnadd=0
+type=L3GFIPV4
+%File path or parameter setting:    
+srcfileparameter=tobeset
+}
+%Node 10-14,j=0:
+{
+ArrIndi=10-14
+ArrIndj=0
+dsnadd=4
+type=L3GFIPV4
+%File path or parameter setting:    
+srcfileparameter=tobeset
+}
+%End of scope:
+ScopeEnd

@@ -1,0 +1,85 @@
+%-The parameters must be assigned with particular settings to be defined by users, and a null assignment will pause simulation running;
+%-The parameter names cannot be modified, and must be followed immediately by"=", which is then only followed immediately by the setting;
+%-Comments/explanations are started by "%", and cannot be in the same line as those for parameter assignment;
+%-The scope for setting each array setting is delimited by ScopeBegin and ScopeEnd, any assignment out of the scope will not be processed;
+%-Array index i (ArrIndi) can be expressed in batch as follows: i-j,k,m-p,h,t, which must be ended by '\0'. This experession is not applicable for Array index j (ArrIndj) of 2D array
+%-One setting files can consist of multiple blcoks delimited by a pair of "{}", each corresponding to one array element. 
+%-The following is the defintion of communication card (ccard):
+%Beginning of scope:
+ScopeBegin
+%Node 0
+{
+ArrIndi=0-4,5-14
+ArrIndj=0
+%Communication card type, i.e., eithernet, 80211:
+type=L2GFIEEE8023
+%Physical (MAC) address (one comcard has one address):
+phyadd=00-16-EA-AE-3C-40
+%Physical interface type, i.e., comintty:
+phytype=0
+%Maximum retransmission times for MAC:    
+macmt=0
+%Maximum number of frames to be sent per MAC win (To be set by a particular MAC protocol):
+trainsize=0
+%Maximum retransmission times for LLC:     
+llcmt=0
+%Interface state: off,sleeping,standby,transmitting, receiving:
+state=2
+%MAC process undergoing flag:
+macdoing=false
+%Frame lifetime in second:
+frmlifetime=-1
+%State-end time:
+stet=0.01
+%Link cost:
+linkcost=0
+%Interface role: master (0),slave (1) and both (2):
+role=0
+%Interface promiscuous mode (>0):nodes receive each arriving frame:
+pmode=1
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%File path or parameter setting:    
+fileparameter=tobeset
+}
+%Node 1
+{
+ArrIndi=0-4,5-14
+ArrIndj=1
+%Communication card type, i.e., eithernet, 80211:
+type=L2GFETCTYPE
+%Physical (MAC) address (one comcard has one address):
+phyadd=AA-16-EA-AE-3C-67-40
+%Physical interface type, i.e., comintty:
+phytype=0
+%Maximum retransmission times for MAC:    
+macmt=0
+%Maximum number of frames to be sent per MAC win (To be set by a particular MAC protocol):
+trainsize=0
+%Maximum retransmission times for LLC:     
+llcmt=0
+%Interface state: off,sleeping,standby,transmitting, receiving:
+state=2
+%MAC process undergoing flag:
+macdoing=false
+%Frame lifetime in second:
+frmlifetime=-1
+%State-end time:
+stet=0.01
+%Link cost:
+linkcost=0
+%Interface role: master (0),slave (1) and both (2):
+role=0
+%Interface promiscuous mode (>0):nodes receive each arriving frame:
+pmode=1
+%MAC protocol id:
+macid=MACNPCSMA
+%LLC protocol id:
+llcid=LLCNOP
+%File path or parameter setting:    
+fileparameter=tobeset
+}
+%End of scope:
+ScopeEnd
