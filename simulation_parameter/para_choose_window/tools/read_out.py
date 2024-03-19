@@ -53,6 +53,7 @@ def readJsonFile(fileName):
     with open(file_path, "r") as file:
         data = json.load(file)
         print(data)
+        #### 在此处继续写读取json文件并建立界面
 
 
 def getConfig(key):

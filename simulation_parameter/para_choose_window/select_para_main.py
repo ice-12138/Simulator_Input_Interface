@@ -104,9 +104,6 @@ class MyApplication(QMainWindow):
         elif device_name == "environment":
             self.right_up_widget.setCurrentIndex(2)
 
-    def addWidget(self, data):
-        self.argsData = argsData
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
