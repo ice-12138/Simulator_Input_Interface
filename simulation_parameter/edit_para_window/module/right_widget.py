@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-import module.tool as tool
+import module.tools.tool as tool
 
 
 class SecTableWidget:

@@ -4,7 +4,7 @@ from module.left_widget import *
 from module.right_widget import *
 import sys
 import json
-import module.tool as tool
+import module.tools.tool as tool
 
 
 class MyApplication(QMainWindow):
@@ -88,7 +88,7 @@ class MyApplication(QMainWindow):
                 if not rowValue == []:
                     content.update({row: rowValue})
             data.update({item.text(): content})
-        dirPath = "jsonData"
+        dirPath = tool.getConfig("json_path")
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getSaveFileName(
             self, "Save File", dirPath, "JSON Files (*.json)", options=options
