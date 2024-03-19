@@ -4,6 +4,7 @@ from module.left_widget import *
 from module.right_widget import *
 import sys
 import json
+import module.tool as tool
 
 
 class MyApplication(QMainWindow):
@@ -40,8 +41,8 @@ class MyApplication(QMainWindow):
         layout = QHBoxLayout()
         central_widget.setLayout(layout)
         # 创建左侧列表
-        leftWidget = SecListWidget(self)
-        lw = leftWidget.setupUi()
+        self.leftWidget = SecListWidget(self)
+        lw = self.leftWidget.setupUi()
         layout.addWidget(lw, 25)
         # 创建右侧窗口
         self.rw = QStackedWidget()
@@ -65,15 +66,36 @@ class MyApplication(QMainWindow):
         widget.deleteLater()
 
     def saveJson(self):
+        data = {}
+        # 遍历所有左侧的list
+        list = self.leftWidget.getList()
+        for i in range(list.count()):
+            item = list.item(i)
+            # 右侧widget的index
+            index = item.getIndex()
+            # 获得右侧界面的table
+            table = self.rw.widget(index).layout().itemAt(0).widget()
+            # 遍历table
+            content = {}
+            for row in range(table.rowCount()):
+                rowValue = []
+                for col in range(table.columnCount()):
+                    val = tool.getValue(table.cellWidget(row, col))
+                    # 如果该列的参数名称为空，或碰到了第一个None值则继续进行下一行
+                    if (col == 0 and val == "") or val == None:
+                        break
+                    rowValue.append(val)
+                if not rowValue == []:
+                    content.update({row: rowValue})
+            data.update({item.text(): content})
         dirPath = "jsonData"
-        data = ""
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getSaveFileName(
             self, "Save File", dirPath, "JSON Files (*.json)", options=options
         )
         if file_path:
             with open(file_path, "w") as json_file:
-                json.dump(data, json_file)
+                json.dump(data, json_file, indent=4)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+import module.tool as tool
 
 
 class SecTableWidget:
@@ -55,14 +56,14 @@ class SecTableWidget:
         self.table_widget.setCellWidget(row, 0, label)
         # 单位部分
         unitBox = QComboBox()
-        unitBox.addItems(["空", "下拉框"])
+        unitBox.addItems(["none", "combox"])
         self.table_widget.setCellWidget(row, 1, unitBox)
         unitLine = QLineEdit()
         unitLine.setPlaceholderText("','分割多个输入")
         self.table_widget.setCellWidget(row, 2, unitLine)
         # 输入部分
         inputBox = QComboBox()
-        inputBox.addItems(["输入框", "下拉框", "数值选择"])
+        inputBox.addItems(["line", "combox", "spinbox"])
         self.table_widget.setCellWidget(row, 3, inputBox)
         inputLine = QLineEdit()
         inputLine.setPlaceholderText("输入默认值")
@@ -136,23 +137,13 @@ class SecTableWidget:
         if row1 != row2:
             for col in range(self.table_widget.columnCount()):
                 # 获取第一行的窗口部件
-                text1 = self.getValue(self.table_widget.cellWidget(row1, col))
+                text1 = tool.getValue(self.table_widget.cellWidget(row1, col))
                 # 获取第二行的窗口部件
-                text2 = self.getValue(self.table_widget.cellWidget(row2, col))
+                text2 = tool.getValue(self.table_widget.cellWidget(row2, col))
                 # 将第一行和第二行的内容交换
                 if text1 or text2:
-                    self.setValue(self.table_widget.cellWidget(row1, col), text2)
-                    self.setValue(self.table_widget.cellWidget(row2, col), text1)
+                    tool.setValue(self.table_widget.cellWidget(row1, col), text2)
+                    tool.setValue(self.table_widget.cellWidget(row2, col), text1)
 
-    def getValue(self, widget):
-        if isinstance(widget, QLabel) or isinstance(widget, QLineEdit):
-            return widget.text()
-        elif isinstance(widget, QComboBox):
-            return widget.currentText()
-        return None
-
-    def setValue(self, widget, context):
-        if isinstance(widget, QLabel) or isinstance(widget, QLineEdit):
-            widget.setText(context)
-        elif isinstance(widget, QComboBox):
-            widget.setCurrentText(context)
+    def getTable(self):
+        return self.table_widget

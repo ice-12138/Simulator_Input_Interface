@@ -87,6 +87,9 @@ class SecListWidget:
     def changeRightWidget(self, item):
         self.parent.changeWidget(item.getIndex())
 
+    def getList(self):
+        return self.listWidget
+
 
 # list item中带有右侧widget的index
 class QListWidgetItemWithIndex(QListWidgetItem):
