@@ -13,3 +13,5 @@ pyuic5 -o XX.py XX.ui
 打包代码：
 - cd到所需打包程序的文件夹
 - pyinstaller -F -w demo.py
+
+每次上传前运行delCache.py文件删除所有python运行缓存
