@@ -14,11 +14,10 @@ from enums.input_type import *
 
 
 class Basic:
-    def __init__(self, mainWindow, arguments):
+    def __init__(self, mainWindow):
         self.mainWindow = mainWindow
         self.parent = QFormLayout(mainWindow)
         self.row = -1
-        self.arguments = arguments
         self.labels = []
         self.modules = []
         self.leader = ""
@@ -33,7 +32,7 @@ class Basic:
         input_type: InputType = "",
     ):
 
-        if module_type == Module.LABEL:
+        if module_type == "label":
             # 每个label标签换行
             self.row += 1
             self.module_type = QLabel(self.mainWindow)
@@ -43,7 +42,7 @@ class Basic:
             if name != "":
                 self.labels.append(name)
 
-        if module_type == Module.COMBOX:
+        if module_type == "combox":
             self.module_type = QComboBox(self.mainWindow)
             self.module_type.addItems(text)
             if isinstance(self.parent, QFormLayout):
@@ -54,17 +53,17 @@ class Basic:
             if leader:
                 self.leader = self.module_type
 
-        if module_type == Module.LINEEDIT:
+        if module_type == "line":
             self.module_type = QLineEdit(self.mainWindow)
-            self.module_type.setText(text)
+            self.module_type.setText(text[0])
             if isinstance(self.parent, QFormLayout):
                 self.parent.setWidget(self.row, QFormLayout.FieldRole, self.module_type)
             if output:
                 self.modules.append(self.module_type)
 
-        if module_type == Module.SPINBOX:
+        if module_type == "spinbox":
             self.module_type = QSpinBox(self.mainWindow)
-            self.module_type.setValue(text)
+            self.module_type.setValue(text[0])
             if isinstance(self.parent, QFormLayout):
                 self.parent.setWidget(self.row, QFormLayout.FieldRole, self.module_type)
             if output:
@@ -74,26 +73,25 @@ class Basic:
 
         return self.module_type
 
-    def createLayout(self, module_type, child):
-        if module_type == Layout.HBOX:
-            self.layout = QHBoxLayout()
-            for i in child:
-                self.layout.addWidget(i)
-            if isinstance(self.parent, QFormLayout):
-                self.parent.setLayout(self.row, QFormLayout.FieldRole, self.layout)
+    def createLayout(self, child):
+        self.layout = QHBoxLayout()
+        for i in child:
+            self.layout.addWidget(i)
+        if isinstance(self.parent, QFormLayout):
+            self.parent.setLayout(self.row, QFormLayout.FieldRole, self.layout)
 
     def createChild(
         self, module_type, text: str, output: bool = False, input_type: InputType = ""
     ):
-        if module_type == Module.COMBOX:
+        if module_type == "combox":
             self.module_type = QComboBox(self.mainWindow)
             self.module_type.addItems(text)
             if output:
                 self.modules.append(self.module_type)
 
-        if module_type == Module.LINEEDIT:
+        if module_type == "line":
             self.module_type = QLineEdit(self.mainWindow)
-            self.module_type.setText(text)
+            self.module_type.setText(text[0])
             if output:
                 self.modules.append(self.module_type)
 
@@ -101,17 +99,17 @@ class Basic:
 
         return self.module_type
 
-    def updateValues(self, index):
-        argument = self.arguments[index]
-        for i in range(len(self.modules)):
-            if isinstance(self.modules[i], QComboBox):
-                self.modules[i].setCurrentText(argument[i + 1])
+    # def updateValues(self, index):
+    #     argument = self.arguments[index]
+    #     for i in range(len(self.modules)):
+    #         if isinstance(self.modules[i], QComboBox):
+    #             self.modules[i].setCurrentText(argument[i + 1])
 
-            if isinstance(self.modules[i], QLineEdit):
-                self.modules[i].setText(argument[i + 1])
+    #         if isinstance(self.modules[i], QLineEdit):
+    #             self.modules[i].setText(argument[i + 1])
 
-            if isinstance(self.modules[i], QSpinBox):
-                self.modules[i].setValue(int(argument[i + 1]))
+    #         if isinstance(self.modules[i], QSpinBox):
+    #             self.modules[i].setValue(int(argument[i + 1]))
 
     def updateValuesOpen(self, values):
         for i in range(len(self.modules)):

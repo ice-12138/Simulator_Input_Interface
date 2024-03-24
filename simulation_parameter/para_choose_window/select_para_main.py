@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from children_window.network_card import NetWork
+from children_window.model import Model
 import tools.read_out as ro
 import sys
 import os
@@ -26,9 +26,9 @@ class MyApplication(QMainWindow):
 
         fileMenu = QMenu("&File", self)
         saveSubMenu = QAction("Save", self)
-        saveSubMenu.triggered.connect(lambda: ro.save_to_file(self, basic))
+        saveSubMenu.triggered.connect(lambda: self.save_to_file())
         openSubMenu = QAction("Open", self)
-        openSubMenu.triggered.connect(lambda: ro.open_file(self, basic))
+        # openSubMenu.triggered.connect(lambda: ro.open_file(self, basic))
         fileMenu.addAction(saveSubMenu)
         fileMenu.addAction(openSubMenu)
         self.menubar.addMenu(fileMenu)
@@ -42,7 +42,7 @@ class MyApplication(QMainWindow):
                 actionName = name.split(".")[0]
                 subArgAction = QAction(actionName, self)
                 subArgAction.triggered.connect(
-                    lambda action, fileName=actionName: ro.readJsonFile(fileName)
+                    lambda action, fileName=actionName: self.parsJson(fileName)
                 )
                 argMenu.addAction(subArgAction)
         self.menubar.addMenu(argMenu)
@@ -55,11 +55,7 @@ class MyApplication(QMainWindow):
         layout = QHBoxLayout()
         # 左侧
         self.left_widget = QListWidget(self)
-        layout.addWidget(self.left_widget)
-
-        self.left_widget.addItem("network")
-        self.left_widget.addItem("router")
-        self.left_widget.addItem("environment")
+        layout.addWidget(self.left_widget, 30)
 
         self.left_widget.itemClicked.connect(self.on_btn_clicked)
 
@@ -71,38 +67,64 @@ class MyApplication(QMainWindow):
         self.right_up_widget = QStackedWidget()
         right_layout.addWidget(self.right_up_widget)
 
-        # 网卡参数面板
-        self.network_widget = QWidget()
-        right_up_layout = NetWork()
-        basic = right_up_layout.generate_window(self.network_widget)
-
-        # 路由器参数面板
-        self.router_widget = QWidget()
-        lable2 = QLabel("路由器参数面板", self.router_widget)
-
-        # 环境参数面板
-        self.environment_widget = QWidget()
-        lable3 = QLabel("环境参数面板", self.environment_widget)
-
-        # 把参数面板加到堆载窗口中
-        self.right_up_widget.addWidget(self.network_widget)
-        self.right_up_widget.addWidget(self.router_widget)
-        self.right_up_widget.addWidget(self.environment_widget)
-
-        right_layout.addWidget(self.right_up_widget)
-
-        layout.addWidget(right_widget)
+        layout.addWidget(right_widget, 70)
 
         central_widget.setLayout(layout)
 
     def on_btn_clicked(self, item):
-        device_name = item.text()
-        if device_name == "network":
-            self.right_up_widget.setCurrentIndex(0)
-        elif device_name == "router":
-            self.right_up_widget.setCurrentIndex(1)
-        elif device_name == "environment":
-            self.right_up_widget.setCurrentIndex(2)
+        if isinstance(item, QListWidgetItemWithIndex):
+            index = item.getIndex()
+            self.right_up_widget.setCurrentIndex(index)
+
+    # 读取并解析json文件生成界面
+    def parsJson(self, fileName):
+        data = ro.readJsonFile(fileName)
+        # 先删除目前有的list和widget
+        self.left_widget.clear()
+        while self.right_up_widget.count():
+            widgetToRmove = self.right_up_widget.widget(0)
+            self.right_up_widget.removeWidget(widgetToRmove)
+            widgetToRmove.deleteLater()
+        for key, value in data.items():
+            self.addWidgte(key, value)
+
+    def addWidgte(self, name, data):
+        # 创建右边页面
+        widget = QWidget()
+        layout = Model()
+        basic = layout.generate_window(widget, data)
+        self.right_up_widget.addWidget(widget)
+        count = self.left_widget.count()
+        # 增加左侧list行数
+        item = QListWidgetItemWithIndex(basic, count, name)
+        self.left_widget.addItem(item)
+
+    def save_to_file(self):
+        basics = []
+        # 遍历widget
+        for i in range(self.left_widget.count()):
+            item = self.left_widget.item(i)
+            basics.append(item.getBasic())
+        ro.save_to_file(self, basics)
+
+
+# list item中带有右侧widget的index
+class QListWidgetItemWithIndex(QListWidgetItem):
+    def __init__(self, basic, index: int, text: str, parent=None):
+        super(QListWidgetItemWithIndex, self).__init__(parent)
+        self.basic = basic
+        self.index = index
+        self.setText(text)
+        self.currentText = text
+
+    def getIndex(self):
+        return self.index
+
+    def setIndex(self, index):
+        self.index = index
+
+    def getBasic(self):
+        return self.basic
 
 
 if __name__ == "__main__":

@@ -6,24 +6,24 @@ import json
 import os
 
 
-def save_to_file(self, basic):
+def save_to_file(self, basics):
     file_name, _ = QFileDialog.getSaveFileName(
         self, "Save File", "", "Text Files (*.txt)"
     )
     if file_name:
         with open(file_name, "w") as file:
-            file.write("{\n")
-            for label, value in zip(basic.labels, basic.modules):
-                if isinstance(value, QComboBox):
-                    value = find_by_name(label, value.currentText())
-                elif isinstance(value, QLineEdit):
-                    value = find_by_name(label, value.text())
-                elif isinstance(value, QSpinBox):
-                    value = find_by_name(label, value.value())
+            for basic in basics:
+                file.write("{\n")
+                for label, value in zip(basic.labels, basic.modules):
+                    if isinstance(value, QComboBox):
+                        value = find_by_name(label, value.currentText())
+                    elif isinstance(value, QLineEdit):
+                        value = find_by_name(label, value.text())
+                    elif isinstance(value, QSpinBox):
+                        value = find_by_name(label, value.value())
 
-                file.write(f"{label} = {value}\n")
-            file.write("}\n")
-    print("保存成功！")
+                    file.write(f"{label} = {value}\n")
+                file.write("}\n")
 
 
 def open_file(self, basic):
@@ -52,8 +52,7 @@ def readJsonFile(fileName):
     file_path = os.path.join(dirPath, fileName + ".json")
     with open(file_path, "r") as file:
         data = json.load(file)
-        print(data)
-        #### 在此处继续写读取json文件并建立界面
+    return data
 
 
 def getConfig(key):

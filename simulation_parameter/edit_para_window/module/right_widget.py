@@ -15,8 +15,8 @@ class SecTableWidget:
         layout.addWidget(self.table_widget)
         horizontal_headers = [
             "para name",
+            "alias",
             "unit",
-            "unit value",
             "input type",
             "input value",
             "del",
@@ -54,10 +54,11 @@ class SecTableWidget:
         label = QLineEdit()
         label.setPlaceholderText("输入参数名称")
         self.table_widget.setCellWidget(row, 0, label)
-        # 单位部分
-        unitBox = QComboBox()
-        unitBox.addItems(["none", "combox"])
-        self.table_widget.setCellWidget(row, 1, unitBox)
+        # 别名
+        alias = QLineEdit()
+        alias.setPlaceholderText("输入参数别名")
+        self.table_widget.setCellWidget(row, 1, alias)
+        # 单位
         unitLine = QLineEdit()
         unitLine.setPlaceholderText("','分割多个输入")
         self.table_widget.setCellWidget(row, 2, unitLine)
