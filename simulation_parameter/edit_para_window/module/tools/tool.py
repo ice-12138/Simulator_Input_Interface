@@ -13,13 +13,23 @@ def getValue(widget):
     return None
 
 
-def setValue(widget, context):
-    if isinstance(widget, QLabel) or isinstance(widget, QLineEdit):
-        widget.setText(context)
+def setValue(widget, context, placeholder: str = "", combobox_item: list = []):
+    if isinstance(widget, QLabel):
+        if context and context != "":
+            widget.setText(context)
+    elif isinstance(widget, QLineEdit):
+        if context and context != "":
+            widget.setText(context)
+        elif placeholder != "":
+            widget.setPlaceholderText(placeholder)
     elif isinstance(widget, QComboBox):
-        widget.setCurrentText(context)
+        if context and context != "":
+            widget.setCurrentText(context)
+        if len(combobox_item) != 0:
+            widget.addItems(combobox_item)
     elif isinstance(widget, QSpinBox):
-        widget.setValue(context)
+        if context and context != "":
+            widget.setValue(int(context))
 
 
 def readJsonFile(fileName):

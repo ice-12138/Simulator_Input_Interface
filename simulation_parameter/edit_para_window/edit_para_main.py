@@ -18,8 +18,8 @@ class MyApplication(QMainWindow):
         self.setWindowTitle("参数编辑")
         # 获取屏幕尺寸
         screen_size = QApplication.primaryScreen().size()
-        width_percent = 0.5
-        height_percent = 0.5
+        width_percent = 0.6
+        height_percent = 0.7
         window_width = screen_size.width() * width_percent
         window_height = screen_size.height() * height_percent
         self.resize(QSize(int(window_width), int(window_height)))

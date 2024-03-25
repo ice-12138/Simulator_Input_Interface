@@ -57,47 +57,37 @@ class SecTableWidget:
             self.addItem(args[str(i)])
 
     # 新建item
-    def addItem(self, args: list = []):
+    def addItem(self, args: list = None):
         # 查看表格行数
         row = self.table_widget.rowCount()
         # 添加一行
         self.table_widget.insertRow(row)
         label = QLineEdit()
-        if len(args) == 0 or (args[0] and args[0] == ""):
-            label.setPlaceholderText("输入参数名称")
-        else:
-            tool.setValue(label, args[0])
+        tool.setValue(label, args[0] if args else "", "输入参数名称")
         self.table_widget.setCellWidget(row, 0, label)
         # 别名
         alias = QLineEdit()
-        if len(args) == 0 or (args[1] and args[1] == ""):
-            alias.setPlaceholderText("输入参数别名")
-        else:
-            tool.setValue(alias, args[1])
+        tool.setValue(alias, args[1] if args else "", "输入参数别名")
         self.table_widget.setCellWidget(row, 1, alias)
         # 单位
         unitLine = QLineEdit()
-        if len(args) == 0 or (args[2] and args[2] == ""):
-            unitLine.setPlaceholderText("','分割多个输入")
-        else:
-            tool.setValue(unitLine, args[2])
+        tool.setValue(unitLine, args[2] if args else "", "','分割多个输入")
         self.table_widget.setCellWidget(row, 2, unitLine)
         # 输入部分
         inputBox = QComboBox()
-        inputBox.addItems(["line", "combox", "spinbox"])
-        if not (len(args) == 0 or (args[3] and args[3] == "")):
-            tool.setValue(inputBox, args[3])
+        tool.setValue(
+            inputBox,
+            args[3] if args else "",
+            combobox_item=["line", "combox", "spinbox"],
+        )
         self.table_widget.setCellWidget(row, 3, inputBox)
         inputLine = QLineEdit()
-        if len(args) == 0 or (args[4] and args[4] == ""):
-            inputLine.setPlaceholderText("输入默认值")
-        else:
-            tool.setValue(inputLine, args[4])
+        tool.setValue(inputLine, args[4] if args else "", "输入默认值")
         self.table_widget.setCellWidget(row, 4, inputLine)
         inputType = QComboBox()
-        inputType.addItems(["all", "0-9", "a-zA-Z"])
-        if not (len(args) == 0 or (args[5] and args[5] == "")):
-            tool.setValue(inputType, args[5])
+        tool.setValue(
+            inputType, args[5] if args else "", combobox_item=["all", "0-9", "a-zA-Z"]
+        )
         self.table_widget.setCellWidget(row, 5, inputType)
         # 按钮
 
