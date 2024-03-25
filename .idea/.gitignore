@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+*.txt
+*.psd
+
