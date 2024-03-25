@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from enums.module_type import *
 from enums.input_type import *
 
 # round:该组件在哪个范围
@@ -131,12 +130,12 @@ class Basic:
     #     if warning == QMessageBox.Ok:
     #         warning.close()
     def inputTypeCheck(self, input_type, model):
-        if input_type == InputType.ALPHA:
+        if input_type == "a-zA-Z":
             regex = QRegExp("[a-zA-Z]+")
             validator = QRegExpValidator(regex)
             model.setValidator(validator)
 
-        if input_type == InputType.DIGIT:
+        if input_type == "0-9":
             regex = QRegExp("[0-9]+")
             validator = QRegExpValidator(regex)
             model.setValidator(validator)

@@ -10,7 +10,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from tools.basic import Basic
 from enums.unit import *
-from enums.module_type import *
 from enums.input_type import *
 from enums.args import *
 
@@ -24,10 +23,16 @@ class Model:
             self.basic.create("label", value[0], True, False, value[1])
             # 创建内容
             if value[2] == "":  # 如果没有单位
-                self.basic.create(value[3], self.toArray(value[4]), True)
+                self.basic.create(
+                    value[3], self.toArray(value[4]), True, input_type=value[5]
+                )
             else:
-                child1 = self.basic.createChild("combox", self.toArray(value[2]), False)
-                child2 = self.basic.createChild(value[3], self.toArray(value[4]), True)
+                child1 = self.basic.createChild(
+                    "combox", self.toArray(value[2]), False, value[5]
+                )
+                child2 = self.basic.createChild(
+                    value[3], self.toArray(value[4]), True, value[5]
+                )
                 self.basic.createLayout([child1, child2])
 
         self.modules = self.basic.modules

@@ -44,15 +44,3 @@ def read_key_value_pairs():
             key, value = line.strip().split(":")
             key_value_pairs[key] = value
     return key_value_pairs
-
-
-def readJsonFile(fileName):
-    dirPath = getConfig("json_path")
-    if ".json" not in fileName:
-        file_path = os.path.join(dirPath, fileName + ".json")
-    else:
-        file_path = os.path.join(dirPath, fileName)
-
-    with open(file_path, "r") as file:
-        data = json.load(file)
-    return data

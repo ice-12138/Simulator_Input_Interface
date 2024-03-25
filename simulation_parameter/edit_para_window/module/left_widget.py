@@ -1,12 +1,38 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from functools import singledispatch
 
 
 class SecListWidget:
     def __init__(self, parent) -> None:
         self.parent = parent
 
+    # 新建一个配置界面
     def setupUi(self):
+        widget = self.setupUiHelp()
+
+        # 如果示例为空添加一个空白示例
+        if self.listWidget.count() == 0:
+            item = QListWidgetItemWithIndex(0)
+            item.setText("untitled")
+            self.listWidget.addItem(item)
+
+        return widget
+
+    # 打开保存的配置
+    def setupUiByExist(self, data: dict):
+        # 如果item数量大于data的数量，删除多余item
+        listCount = self.listWidget.count()
+        if listCount > len(data):
+            datalen = listCount - len(data)
+            for i in range(datalen):
+                self.listWidget.takeItem(listCount - 1 - i)
+        index = 0
+        for key, value in data.items():
+            self.addItemByExist(key, value, index)
+            index += 1
+
+    def setupUiHelp(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
         self.listWidget = QListWidget()
@@ -15,12 +41,6 @@ class SecListWidget:
         self.listWidget.setAcceptDrops(True)
         self.listWidget.setDragEnabled(True)
         self.listWidget.setDefaultDropAction(Qt.MoveAction)  # 设置默认的拖拽行为为移动
-
-        # 如果示例为空添加一个空白示例
-        if self.listWidget.count() == 0:
-            item = QListWidgetItemWithIndex(0)
-            item.setText("untitled")
-            self.listWidget.addItem(item)
 
         # 设置双击可编辑
         self.listWidget.itemDoubleClicked.connect(lambda item: self.edit_item(item))
@@ -42,7 +62,6 @@ class SecListWidget:
         buttonLayout.addWidget(self.delButton)
 
         layout.addWidget(buttonWidget)
-
         return widget
 
     # 编辑item
@@ -64,6 +83,22 @@ class SecListWidget:
         self.edit_item(item)
         # 对应增加右侧widget
         self.parent.addRightWidget()
+
+    # 从已存在的文件中读取配置
+    # numOfRight:修改右面第几个widget
+    def addItemByExist(self, name, data, numOfRight):
+        # 父组件右侧重叠widget的数量
+        count = self.parent.rw.count()
+        if numOfRight <= count:  # 如果要修改的数量少于当前右边widget的数量
+            # 修改左侧list的名字
+            item = self.listWidget.item(numOfRight)
+            item.setText(name)
+        else:
+            # 增加左侧list行数
+            item = QListWidgetItemWithIndex(numOfRight, name)
+            self.listWidget.addItem(item)
+        # 对应增加右侧widget
+        self.parent.addRightWidgetByExist(data, numOfRight)
 
     # 删除item
     def del_item(self):
@@ -93,9 +128,11 @@ class SecListWidget:
 
 # list item中带有右侧widget的index
 class QListWidgetItemWithIndex(QListWidgetItem):
-    def __init__(self, index: int, parent=None):
+    def __init__(self, index: int, text: str = "", parent=None):
         super(QListWidgetItemWithIndex, self).__init__(parent)
         self.index = index
+        if not text == "":
+            self.setText(text)
 
     def getIndex(self):
         return self.index

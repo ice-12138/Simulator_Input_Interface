@@ -8,6 +8,16 @@ class SecTableWidget:
         self.parent = parent
 
     def setupUi(self):
+        widget = self.setupUiHelp()
+        # 新建空白行
+        if self.table_widget.rowCount() == 0:
+            self.addItem()
+        return widget
+
+    def setupUiByExist(self, data):
+        widget = self.setupUiHelp()
+
+    def setupUiHelp(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
         # 表格部分
@@ -17,8 +27,9 @@ class SecTableWidget:
             "para name",
             "alias",
             "unit",
-            "input type",
+            "input module",
             "input value",
+            "input type",
             "del",
             "up",
             "down",
@@ -39,36 +50,55 @@ class SecTableWidget:
         buttonLayout.addWidget(self.addButton)
 
         layout.addWidget(buttonWidget)
-        # 如果示例为空添加一行
-        if self.table_widget.rowCount() == 0:
-            self.addItem()
-
         return widget
 
+    def addItems(self, args):
+        for i in range(len(args)):
+            self.addItem(args[str(i)])
+
     # 新建item
-    def addItem(self):
+    def addItem(self, args: list = []):
         # 查看表格行数
         row = self.table_widget.rowCount()
         # 添加一行
         self.table_widget.insertRow(row)
         label = QLineEdit()
-        label.setPlaceholderText("输入参数名称")
+        if len(args) == 0 or (args[0] and args[0] == ""):
+            label.setPlaceholderText("输入参数名称")
+        else:
+            tool.setValue(label, args[0])
         self.table_widget.setCellWidget(row, 0, label)
         # 别名
         alias = QLineEdit()
-        alias.setPlaceholderText("输入参数别名")
+        if len(args) == 0 or (args[1] and args[1] == ""):
+            alias.setPlaceholderText("输入参数别名")
+        else:
+            tool.setValue(alias, args[1])
         self.table_widget.setCellWidget(row, 1, alias)
         # 单位
         unitLine = QLineEdit()
-        unitLine.setPlaceholderText("','分割多个输入")
+        if len(args) == 0 or (args[2] and args[2] == ""):
+            unitLine.setPlaceholderText("','分割多个输入")
+        else:
+            tool.setValue(unitLine, args[2])
         self.table_widget.setCellWidget(row, 2, unitLine)
         # 输入部分
         inputBox = QComboBox()
         inputBox.addItems(["line", "combox", "spinbox"])
+        if not (len(args) == 0 or (args[3] and args[3] == "")):
+            tool.setValue(inputBox, args[3])
         self.table_widget.setCellWidget(row, 3, inputBox)
         inputLine = QLineEdit()
-        inputLine.setPlaceholderText("输入默认值")
+        if len(args) == 0 or (args[4] and args[4] == ""):
+            inputLine.setPlaceholderText("输入默认值")
+        else:
+            tool.setValue(inputLine, args[4])
         self.table_widget.setCellWidget(row, 4, inputLine)
+        inputType = QComboBox()
+        inputType.addItems(["all", "0-9", "a-zA-Z"])
+        if not (len(args) == 0 or (args[5] and args[5] == "")):
+            tool.setValue(inputType, args[5])
+        self.table_widget.setCellWidget(row, 5, inputType)
         # 按钮
 
         delButton = QPushButton("-")
@@ -85,12 +115,12 @@ class SecTableWidget:
         delButton.clicked.connect(lambda: self.delItem())
         upButton.clicked.connect(lambda: self.upItem())
         downButton.clicked.connect(lambda: self.downItem())
-        self.table_widget.setCellWidget(row, 5, delButton)
-        self.table_widget.setCellWidget(row, 6, upButton)
-        self.table_widget.setCellWidget(row, 7, downButton)
-        self.table_widget.setColumnWidth(5, 40)
+        self.table_widget.setCellWidget(row, 6, delButton)
+        self.table_widget.setCellWidget(row, 7, upButton)
+        self.table_widget.setCellWidget(row, 8, downButton)
         self.table_widget.setColumnWidth(6, 40)
         self.table_widget.setColumnWidth(7, 40)
+        self.table_widget.setColumnWidth(8, 40)
         # # 检查删除键是否可用
         # self.checkDelButtonIsAvailable()
 
@@ -101,6 +131,15 @@ class SecTableWidget:
             index = self.table_widget.indexAt(button.pos())
             if index.isValid():
                 self.table_widget.removeRow(index.row())
+
+    # 批量删除倒数n行
+    def delItems(self, num):
+        count = self.table_widget.rowCount()
+        for i in range(num):
+            self.table_widget.removeRow(count - i - 1)
+
+    def delAll(self):
+        self.delItems(self.table_widget.rowCount())
 
     # 向上移动item
     def upItem(self):

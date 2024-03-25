@@ -26,7 +26,7 @@ def save_to_file(self, basics):
                 file.write("}\n")
 
 
-def open_file(self, basic):
+def open_file(self, basics):
     file_path, _ = QFileDialog.getOpenFileName(
         self, "Open File", "", "Text Files (*.txt)"
     )
@@ -34,13 +34,15 @@ def open_file(self, basic):
         try:
             with open(file_path, "r", encoding="utf-8") as file:
                 content = file.read()
-                pattern = r"(\w+)\s*=\s*(\w+)"
-                matches = re.findall(pattern, content)
+                part = re.findall(r"\{([^}]*)\}", content)
+                for i in range(len(part)):
+                    pattern = r"(\w+)\s*=\s*(\w+)"
+                    matches = re.findall(pattern, part[i])
 
-                values = []
-                for match in matches:
-                    values.append(find_by_value(match[0], match[1]))
-                basic.updateValuesOpen(values)
+                    values = []
+                    for match in matches:
+                        values.append(find_by_value(match[0], match[1]))
+                    basics[i].updateValuesOpen(values)
         except Exception as e:
             print("无法打开文件")
             # waring_edit = QTextEdit(formLayoutWidget)

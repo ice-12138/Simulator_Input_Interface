@@ -2,9 +2,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from children_window.model import Model
 import tools.read_out as ro
+import tools.tool as tool
 import sys
 import os
-import json
 
 
 class MyApplication(QMainWindow):
@@ -26,9 +26,11 @@ class MyApplication(QMainWindow):
 
         fileMenu = QMenu("&File", self)
         saveSubMenu = QAction("Save", self)
+        saveSubMenu.setShortcut("Ctrl+S")
         saveSubMenu.triggered.connect(lambda: self.save_to_file())
         openSubMenu = QAction("Open", self)
-        # openSubMenu.triggered.connect(lambda: ro.open_file(self, basic))
+        openSubMenu.setShortcut("Ctrl+O")
+        openSubMenu.triggered.connect(lambda: self.open_file())
         fileMenu.addAction(saveSubMenu)
         fileMenu.addAction(openSubMenu)
         self.menubar.addMenu(fileMenu)
@@ -42,7 +44,9 @@ class MyApplication(QMainWindow):
                 actionName = name.split(".")[0]
                 subArgAction = QAction(actionName, self)
                 subArgAction.triggered.connect(
-                    lambda action, fileName=actionName: self.parsJson(fileName)
+                    lambda action, menu=argMenu, fileName=actionName: self.parsJson(
+                        fileName
+                    )
                 )
                 argMenu.addAction(subArgAction)
         self.menubar.addMenu(argMenu)
@@ -56,7 +60,6 @@ class MyApplication(QMainWindow):
         # 左侧
         self.left_widget = QListWidget(self)
         layout.addWidget(self.left_widget, 30)
-
         self.left_widget.itemClicked.connect(self.on_btn_clicked)
 
         # 右侧
@@ -70,6 +73,8 @@ class MyApplication(QMainWindow):
         layout.addWidget(right_widget, 70)
 
         central_widget.setLayout(layout)
+        # 打开默认参数配置文件
+        self.parsJson(tool.getConfig("default_args_file"))
 
     def on_btn_clicked(self, item):
         if isinstance(item, QListWidgetItemWithIndex):
@@ -77,7 +82,7 @@ class MyApplication(QMainWindow):
             self.right_up_widget.setCurrentIndex(index)
 
     # 读取并解析json文件生成界面
-    def parsJson(self, fileName):
+    def parsJson(self, fileName, action=None, menu=None):
         data = ro.readJsonFile(fileName)
         # 先删除目前有的list和widget
         self.left_widget.clear()
@@ -100,12 +105,26 @@ class MyApplication(QMainWindow):
         self.left_widget.addItem(item)
 
     def save_to_file(self):
+        ro.save_to_file(self, self.collectAllBasic())
+
+    def open_file(self):
+        ro.open_file(self, self.collectAllBasic())
+
+    def collectAllBasic(self):
         basics = []
         # 遍历widget
         for i in range(self.left_widget.count()):
             item = self.left_widget.item(i)
             basics.append(item.getBasic())
-        ro.save_to_file(self, basics)
+        return basics
+
+    def setCheckState(self, action, menu):
+        # 设置被选中的action为checked，其他为unchecked
+        for act in menu.actions():
+            if act != action:
+                act.setChecked(False)
+            else:
+                act.setChecked(True)
 
 
 # list item中带有右侧widget的index

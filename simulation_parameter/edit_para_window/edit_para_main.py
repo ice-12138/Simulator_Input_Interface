@@ -11,7 +11,7 @@ class MyApplication(QMainWindow):
     def __init__(self):
         super().__init__()
         # 用于对应左边list和右边widget的关系
-        self.assocArray = []
+        self.tableWidget = []
         self.setupUi()
 
     def setupUi(self):
@@ -27,9 +27,11 @@ class MyApplication(QMainWindow):
         self.menubar = QMenuBar(self)
         fileMenu = QMenu("&File", self)
         saveSubMenu = QAction("Save", self)
+        saveSubMenu.setShortcut("Ctrl+S")
         saveSubMenu.triggered.connect(lambda: self.saveJson())
         openSubMenu = QAction("Open", self)
-        # openSubMenu.triggered.connect()
+        openSubMenu.setShortcut("Ctrl+O")
+        openSubMenu.triggered.connect(lambda: self.openJson())
         fileMenu.addAction(saveSubMenu)
         fileMenu.addAction(openSubMenu)
         self.menubar.addMenu(fileMenu)
@@ -38,22 +40,33 @@ class MyApplication(QMainWindow):
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
         # 创建水平布局
-        layout = QHBoxLayout()
-        central_widget.setLayout(layout)
+        self.centralLayout = QHBoxLayout()
+        central_widget.setLayout(self.centralLayout)
         # 创建左侧列表
         self.leftWidget = SecListWidget(self)
-        lw = self.leftWidget.setupUi()
-        layout.addWidget(lw, 25)
+        self.lw = self.leftWidget.setupUi()
+        self.centralLayout.addWidget(self.lw, 25)
         # 创建右侧窗口
         self.rw = QStackedWidget()
         self.addRightWidget()
-        layout.addWidget(self.rw, 75)
+        self.centralLayout.addWidget(self.rw, 75)
 
     # 增加右侧堆叠框
     def addRightWidget(self):
         widget = SecTableWidget(self)
         self.rw.addWidget(widget.setupUi())
-        self.assocArray.append(self.rw.count() - 1)
+        self.tableWidget.append(widget)
+
+    # 按所给数据增加右侧堆叠框
+    def addRightWidgetByExist(self, data, numOfRight):
+        tableWidget = self.tableWidget[numOfRight]
+        table = tableWidget.getTable()
+        tableLen = table.rowCount()
+        # dataLen = len(data)
+        # 删除原来的table
+        tableWidget.delAll()
+        # 新建带有data的item
+        tableWidget.addItems(data)
 
     # 变换右侧的显示项
     def changeWidget(self, index):
@@ -96,6 +109,22 @@ class MyApplication(QMainWindow):
         if file_path:
             with open(file_path, "w") as json_file:
                 json.dump(data, json_file, indent=4)
+
+    def openJson(self):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, "Open File", tool.getConfig("json_path"), "JSON Files (*.json)"
+        )
+        data = tool.readJsonFile(file_path)
+        self.resetAllWidget(data)
+
+    # 更新水平layout中的所有widget
+    def resetAllWidget(self, data):
+        self.leftWidget.setupUiByExist(data)
+        # self.leftWidget = SecListWidget(self)
+        # lw = self.leftWidget.setupUiByExist(data)
+        # self.centralLayout.addWidget(lw, 25)
+        # self.rw = QStackedWidget()
+        # self.centralLayout.addWidget(self.rw, 75)
 
 
 if __name__ == "__main__":

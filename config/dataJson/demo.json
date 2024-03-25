@@ -1,0 +1,68 @@
+{
+    "network": {
+        "0": [
+            "1D array index",
+            "ArrIndi",
+            "",
+            "line",
+            "0",
+            "0-9"
+        ],
+        "1": [
+            "Channel frequency",
+            "freq",
+            "Hz,MHz,GHz",
+            "line",
+            "5000000000",
+            "0-9"
+        ],
+        "2": [
+            "Channel bandwidth",
+            "band",
+            "Hz,MHz,GHz",
+            "line",
+            "20000000",
+            "0-9"
+        ],
+        "3": [
+            "Transmission rate for data",
+            "dtxr",
+            "bits/s,Mbit/s",
+            "line",
+            "54000000",
+            "0-9"
+        ],
+        "4": [
+            "Transmission rate for control information",
+            "ctxr",
+            "bits/s,Mbit/s",
+            "line",
+            "54000000",
+            "0-9"
+        ],
+        "5": [
+            "Transmission distance",
+            "txds",
+            "",
+            "line",
+            "0",
+            "0-9"
+        ],
+        "6": [
+            "Signal propagation speed",
+            "sps",
+            "",
+            "line",
+            "LIGHTSPEED",
+            "a-zA-Z"
+        ],
+        "7": [
+            "Transmission power",
+            "txpw",
+            "",
+            "line",
+            "0.1",
+            "0-9"
+        ]
+    }
+}
