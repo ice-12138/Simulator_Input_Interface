@@ -62,7 +62,9 @@ def readJsonFile(fileName):
         file_path = os.path.join(dirPath, fileName + ".json")
     else:
         file_path = os.path.join(dirPath, fileName)
-
-    with open(file_path, "r") as file:
-        data = json.load(file)
+    try:
+        with open(file_path, "r") as file:
+            data = json.load(file)
+    except IOError:
+        print("未能找到该文件")
     return data
