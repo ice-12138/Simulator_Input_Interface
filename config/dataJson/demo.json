@@ -6,7 +6,7 @@
             "",
             "line",
             "0",
-            "0-9"
+            "all"
         ],
         "1": [
             "Channel frequency",
@@ -14,7 +14,7 @@
             "Hz,MHz,GHz",
             "line",
             "5000000000",
-            "0-9"
+            "all"
         ],
         "2": [
             "Channel bandwidth",
@@ -22,7 +22,7 @@
             "Hz,MHz,GHz",
             "line",
             "20000000",
-            "0-9"
+            "all"
         ],
         "3": [
             "Transmission rate for data",
@@ -30,7 +30,7 @@
             "bits/s,Mbit/s",
             "line",
             "54000000",
-            "0-9"
+            "all"
         ],
         "4": [
             "Transmission rate for control information",
@@ -38,7 +38,7 @@
             "bits/s,Mbit/s",
             "line",
             "54000000",
-            "0-9"
+            "all"
         ],
         "5": [
             "Transmission distance",
@@ -46,7 +46,7 @@
             "",
             "line",
             "0",
-            "0-9"
+            "all"
         ],
         "6": [
             "Signal propagation speed",
@@ -54,7 +54,7 @@
             "",
             "line",
             "LIGHTSPEED",
-            "a-zA-Z"
+            "all"
         ],
         "7": [
             "Transmission power",
@@ -62,7 +62,25 @@
             "",
             "line",
             "0.1",
-            "0-9"
+            "all"
+        ]
+    },
+    "simulator_set": {
+        "0": [
+            "simulation name",
+            "simulation_name",
+            "",
+            "line",
+            "test",
+            "all"
+        ],
+        "1": [
+            "Number of seeds used for random number generation",
+            "simulation_seed",
+            "",
+            "line",
+            "200000",
+            "all"
         ]
     }
 }
