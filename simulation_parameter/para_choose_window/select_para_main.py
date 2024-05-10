@@ -1,8 +1,9 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from children_window.model import Model
-import tools.read_out as ro
-import tools.tool as tool
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QWidget, QHBoxLayout, QListWidget, \
+    QVBoxLayout, QStackedWidget, QListWidgetItem
+
+from simulation_parameter.para_choose_window.model import Model
+from tool import tool, read_out
 import sys
 import os
 
@@ -10,9 +11,12 @@ import os
 class MyApplication(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setupUi()
+        self.right_up_widget = None
+        self.menubar = None
+        self.left_widget = None
+        self.setup_ui()
 
-    def setupUi(self):
+    def setup_ui(self):
         self.setWindowTitle("仿真参数选择")
         # 获取屏幕尺寸
         screen_size = QApplication.primaryScreen().size()
@@ -24,32 +28,32 @@ class MyApplication(QMainWindow):
         # 参数列表选择
         self.menubar = QMenuBar(self)
 
-        fileMenu = QMenu("&File", self)
-        saveSubMenu = QAction("Save", self)
-        saveSubMenu.setShortcut("Ctrl+S")
-        saveSubMenu.triggered.connect(lambda: self.save_to_file())
-        openSubMenu = QAction("Open", self)
-        openSubMenu.setShortcut("Ctrl+O")
-        openSubMenu.triggered.connect(lambda: self.open_file())
-        fileMenu.addAction(saveSubMenu)
-        fileMenu.addAction(openSubMenu)
-        self.menubar.addMenu(fileMenu)
+        file_menu = QMenu("&File", self)
+        save_sub_menu = QAction("Save", self)
+        save_sub_menu.setShortcut("Ctrl+S")
+        save_sub_menu.triggered.connect(lambda: self.save_to_file())
+        open_sub_menu = QAction("Open", self)
+        open_sub_menu.setShortcut("Ctrl+O")
+        open_sub_menu.triggered.connect(lambda: self.open_file())
+        file_menu.addAction(save_sub_menu)
+        file_menu.addAction(open_sub_menu)
+        self.menubar.addMenu(file_menu)
 
-        argMenu = QMenu("&Arg", self)
+        arg_menu = QMenu("&Arg", self)
         # 获得参数列表文件夹下所有参数选择
-        folderPath = ro.getConfig("json_path")
-        names = os.listdir(folderPath)
+        folder_path = tool.get_config("json_path")
+        names = os.listdir(folder_path)
         for name in names:
-            if os.path.isfile(os.path.join(folderPath, name)):
-                actionName = name.split(".")[0]
-                subArgAction = QAction(actionName, self)
-                subArgAction.triggered.connect(
-                    lambda action, menu=argMenu, fileName=actionName: self.parsJson(
-                        fileName
+            if os.path.isfile(os.path.join(folder_path, name)):
+                action_name = name.split(".")[0]
+                sub_arg_action = QAction(action_name, self)
+                sub_arg_action.triggered.connect(
+                    lambda action, menu = arg_menu, file_name = action_name: self.pars_json(
+                        file_name
                     )
                 )
-                argMenu.addAction(subArgAction)
-        self.menubar.addMenu(argMenu)
+                arg_menu.addAction(sub_arg_action)
+        self.menubar.addMenu(arg_menu)
         self.setMenuBar(self.menubar)
 
         # 创建主页面中心部件
@@ -74,26 +78,26 @@ class MyApplication(QMainWindow):
 
         central_widget.setLayout(layout)
         # 打开默认参数配置文件
-        self.parsJson(tool.getConfig("default_args_file"))
+        self.pars_json(tool.get_config("default_args_file"))
 
     def on_btn_clicked(self, item):
         if isinstance(item, QListWidgetItemWithIndex):
-            index = item.getIndex()
+            index = item.get_index()
             self.right_up_widget.setCurrentIndex(index)
 
     # 读取并解析json文件生成界面
-    def parsJson(self, fileName, action=None, menu=None):
-        data = ro.readJsonFile(fileName)
+    def pars_json(self, file_name, action = None, menu = None):
+        data = read_out.read_json_file(file_name)
         # 先删除目前有的list和widget
         self.left_widget.clear()
         while self.right_up_widget.count():
-            widgetToRmove = self.right_up_widget.widget(0)
-            self.right_up_widget.removeWidget(widgetToRmove)
-            widgetToRmove.deleteLater()
+            widget_to_remove = self.right_up_widget.widget(0)
+            self.right_up_widget.removeWidget(widget_to_remove)
+            widget_to_remove.deleteLater()
         for key, value in data.items():
-            self.addWidgte(key, value)
+            self.add_widget(key, value)
 
-    def addWidgte(self, name, data):
+    def add_widget(self, name, data):
         # 创建右边页面
         widget = QWidget()
         layout = Model()
@@ -105,20 +109,20 @@ class MyApplication(QMainWindow):
         self.left_widget.addItem(item)
 
     def save_to_file(self):
-        ro.save_to_file(self, self.collectAllBasic())
+        read_out.save_to_file(self, self.collect_all_basic())
 
     def open_file(self):
-        ro.open_file(self, self.collectAllBasic())
+        read_out.open_file(self, self.collect_all_basic())
 
-    def collectAllBasic(self):
+    def collect_all_basic(self):
         basics = []
         # 遍历widget
         for i in range(self.left_widget.count()):
             item = self.left_widget.item(i)
-            basics.append(item.getBasic())
+            basics.append(item.get_basic())
         return basics
 
-    def setCheckState(self, action, menu):
+    def set_check_status(self, action, menu):
         # 设置被选中的action为checked，其他为unchecked
         for act in menu.actions():
             if act != action:
@@ -129,20 +133,20 @@ class MyApplication(QMainWindow):
 
 # list item中带有右侧widget的index
 class QListWidgetItemWithIndex(QListWidgetItem):
-    def __init__(self, basic, index: int, text: str, parent=None):
+    def __init__(self, basic, index: int, text: str, parent = None):
         super(QListWidgetItemWithIndex, self).__init__(parent)
         self.basic = basic
         self.index = index
         self.setText(text)
         self.currentText = text
 
-    def getIndex(self):
+    def get_index(self):
         return self.index
 
-    def setIndex(self, index):
+    def set_index(self, index):
         self.index = index
 
-    def getBasic(self):
+    def get_basic(self):
         return self.basic
 
 

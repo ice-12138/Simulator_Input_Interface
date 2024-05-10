@@ -8,18 +8,18 @@ class Antid(Enum):
     directional = 2
     omni = 3
 
-    def array():
+    def to_array(self):
         array = []
         for item in Antid:
             array.append(item.name)
         return array
 
-    def getValue(name):
+    def get_value(name):
         for item in Antid:
             if item.name == name:
                 return item.value
 
-    def getName(value):
+    def get_name(value):
         for item in Antid:
             if item.value == value:
                 return item.name
@@ -31,18 +31,18 @@ class Mtype(Enum):
     acoustic = 2
     fiber = 3
 
-    def array():
+    def array(self):
         array = []
         for item in Mtype:
             array.append(item.name)
         return array
 
-    def getValue(name):
+    def get_value(name):
         for item in Mtype:
             if item.name == name:
                 return item.value
 
-    def getName(value):
+    def get_name(value):
         for item in Mtype:
             if item.value == value:
                 return item.name
@@ -52,18 +52,18 @@ class Cmode(Enum):
     duple = 0
     simplex = 1
 
-    def array():
+    def array(self):
         array = []
         for item in Cmode:
             array.append(item.name)
         return array
 
-    def getValue(name):
+    def get_value(name):
         for item in Cmode:
             if item.name == name:
                 return item.value
 
-    def getName(value):
+    def get_name(value):
         for item in Cmode:
             if item.value == value:
                 return item.name
@@ -71,21 +71,21 @@ class Cmode(Enum):
 
 def find_by_name(clas: str, name):
     if clas == "antid":
-        return Antid.getValue(name)
+        return Antid.get_value(name)
     elif clas == "mtype":
-        return Mtype.getValue(name)
+        return Mtype.get_value(name)
     elif clas == "cmode":
-        return Cmode.getValue(name)
+        return Cmode.get_value(name)
     else:
         return name
 
 
 def find_by_value(clas: str, value):
     if clas == "antid":
-        return Antid.getName(value)
+        return Antid.get_name(value)
     elif clas == "mtype":
-        return Mtype.getName(value)
+        return Mtype.get_name(value)
     elif clas == "cmode":
-        return Cmode.getName(value)
+        return Cmode.get_name(value)
     else:
         return value

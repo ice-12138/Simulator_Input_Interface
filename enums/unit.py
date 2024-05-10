@@ -6,7 +6,7 @@ class FrequencyUnit(Enum):
     MHZ = "MHz"
     GHZ = "GHz"
 
-    def array():
+    def to_array(self):
         array = []
         for item in FrequencyUnit:
             array.append(item.value)
@@ -18,7 +18,7 @@ class SpeedUnit(Enum):
     MBITSS = "Mbits/s"
     GBITSS = "Gbits/s"
 
-    def array():
+    def to_array(self):
         array = []
         for item in SpeedUnit:
             array.append(item.value)
@@ -29,7 +29,7 @@ class DistanceUnit(Enum):
     M = "m"
     KM = "Km"
 
-    def array():
+    def to_array(self):
         array = []
         for item in DistanceUnit:
             array.append(item.value)
@@ -39,7 +39,7 @@ class DistanceUnit(Enum):
 class PowerUnit(Enum):
     WALT = "Walt"
 
-    def array():
+    def to_array(self):
         array = []
         for item in PowerUnit:
             array.append(item.value)

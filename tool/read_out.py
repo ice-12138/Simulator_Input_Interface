@@ -1,9 +1,14 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+import logging
+
+from PyQt5.QtWidgets import QFileDialog, QComboBox, QLineEdit, QSpinBox
+
 from enums.args import *
 import re
 import json
 import os
+from tool import tool, mns_log
+
+mns_log.mns_logging()
 
 
 def save_to_file(self, basics):
@@ -32,7 +37,7 @@ def open_file(self, basics):
     )
     if file_path:
         try:
-            with open(file_path, "r", encoding="utf-8") as file:
+            with open(file_path, "r", encoding = "utf-8") as file:
                 content = file.read()
                 part = re.findall(r"\{([^}]*)\}", content)
                 for i in range(len(part)):
@@ -44,30 +49,20 @@ def open_file(self, basics):
                         values.append(find_by_value(match[0], match[1]))
                     basics[i].updateValuesOpen(values)
         except Exception as e:
-            print("无法打开文件")
+            logging.warning("无法打开文件")
             # waring_edit = QTextEdit(formLayoutWidget)
             # waring_edit.setPlainText("无法打开文件：{}".format(str(e)))
 
 
-def readJsonFile(fileName):
-    dirPath = getConfig("json_path")
-    file_path = os.path.join(dirPath, fileName + ".json")
-    with open(file_path, "r") as file:
-        data = json.load(file)
+def read_json_file(file_name):
+    dir_path = tool.get_config("json_path")
+    if ".json" not in file_name:
+        file_path = os.path.join(dir_path, file_name + ".json")
+    else:
+        file_path = os.path.join(dir_path, file_name)
+    try:
+        with open(file_path, "r") as file:
+            data = json.load(file)
+    except IOError:
+        logging.error("未能找到该文件")
     return data
-
-
-def getConfig(key):
-    key_value_pairs = read_key_value_pairs()
-    return key_value_pairs.get(key, "Key not found in the file.")
-
-
-def read_key_value_pairs():
-    key_value_pairs = {}
-    with open("config//config.txt", "r", encoding="utf-8") as file:
-        for line in file:
-            if line.strip().startswith("#"):
-                continue
-            key, value = line.strip().split(":")
-            key_value_pairs[key] = value
-    return key_value_pairs
