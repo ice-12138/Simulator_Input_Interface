@@ -47,7 +47,7 @@ def open_file(self, basics):
                     values = []
                     for match in matches:
                         values.append(find_by_value(match[0], match[1]))
-                    basics[i].updateValuesOpen(values)
+                    basics[i].update_values_open(values)
         except Exception as e:
             logging.warning("无法打开文件")
             # waring_edit = QTextEdit(formLayoutWidget)
